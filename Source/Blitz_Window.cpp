@@ -18,6 +18,7 @@ namespace blitz
 		{
 			return 0;
 		}
+		glfwWindowHint(GLFW_RESIZABLE, 0);
 		Window *window = new Window();
 		window->handle = glfwCreateWindow(width, height, title,
 			fullscreen ? glfwGetPrimaryMonitor() : 0, 0);
