@@ -16,12 +16,14 @@ namespace
 	blitz::input::MouseButtonCallback currentMouseButtonCallback = 0;
 	blitz::input::MouseScrollCallback currentMouseScrollCallback = 0;
 }
+/* ----------------------------------------------------------------------------------- */
 namespace blitz
 {
 	struct Window
 	{
 		GLFWwindow *handle;
 	};
+	/* ------------------------------------------------------------------------------- */
 	namespace input
 	{
 		const Int32 KEY_UNKNOWN = GLFW_KEY_UNKNOWN;
@@ -228,6 +230,7 @@ namespace blitz
 		}
 	}
 }
+/* ----------------------------------------------------------------------------------- */
 namespace
 {
 	void keyboardCallback(GLFWwindow *window, blitz::Int32 key, blitz::Int32 scanCode,
