@@ -9,6 +9,8 @@ namespace blitz
 
 	Window *createWindow(Int32 width, Int32 height, const char *title, Bool fullscreen);
 	void destroyWindow(Window *window);
+	Window *getCurrentWindow();
+	Bool windowShouldClose(Window *window);
 }
 
 #endif
