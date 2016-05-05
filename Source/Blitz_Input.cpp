@@ -8,10 +8,13 @@ namespace
 		blitz::Int32 action, blitz::Int32 modifiers);
 	void mouseButtonCallback(GLFWwindow *window, blitz::Int32 button,
 		blitz::Int32 action, blitz::Int32 modifiers);
+	void mouseScrollCallback(GLFWwindow *window, double offsetX, double offsetY);
+	void resetCallbacks();
 	/* ------------------------------------------------------------------------------- */
 	blitz::Window *currentWindow = 0;
 	blitz::input::KeyboardCallback currentKeyboardCallback = 0;
 	blitz::input::MouseButtonCallback currentMouseButtonCallback = 0;
+	blitz::input::MouseScrollCallback currentMouseScrollCallback = 0;
 }
 namespace blitz
 {
@@ -164,7 +167,7 @@ namespace blitz
 		{
 			if (currentWindow != window)
 			{
-				currentMouseButtonCallback = 0;
+				resetCallbacks();
 				currentWindow = window;
 			}
 			currentKeyboardCallback = callback;
@@ -182,7 +185,7 @@ namespace blitz
 		{
 			if (currentWindow != currentWindow)
 			{
-				currentKeyboardCallback = 0;
+				resetCallbacks();
 				currentWindow = window;
 			}
 			currentMouseButtonCallback = callback;
@@ -194,6 +197,24 @@ namespace blitz
 			if (currentWindow == window)
 			{
 				currentMouseButtonCallback = 0;
+			}
+		}
+		Int32 setMouseScrollCallback(Window *window, MouseScrollCallback callback)
+		{
+			if (currentWindow != currentWindow)
+			{
+				resetCallbacks();
+				currentWindow = window;
+			}
+			currentMouseScrollCallback = callback;
+			glfwSetScrollCallback(window->handle, mouseScrollCallback);
+			return 0;
+		}
+		void removeMouseScrollCallback(Window *window)
+		{
+			if (currentWindow == window)
+			{
+				currentMouseScrollCallback = 0;
 			}
 		}
 	}
@@ -215,5 +236,21 @@ namespace
 		{
 			currentMouseButtonCallback(currentWindow, button, action, modifiers);
 		}
+	}
+	void mouseScrollCallback(GLFWwindow *window, double offsetX, double offsetY)
+	{
+		if (window == currentWindow->handle && currentMouseScrollCallback)
+		{
+			blitz::input::Point<float> offset;
+			offset.x = (float)offsetX;
+			offset.y = (float)offsetY;
+			currentMouseScrollCallback(currentWindow, offset);
+		}
+	}
+	void resetCallbacks()
+	{
+		currentKeyboardCallback = 0;
+		currentMouseButtonCallback = 0;
+		currentMouseScrollCallback = 0;
 	}
 }

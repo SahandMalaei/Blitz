@@ -148,15 +148,24 @@ namespace blitz
 		extern const Int32 MOUSE_BUTTON_RIGHT;
 		extern const Int32 MOUSE_BUTTON_MIDDLE;
 
+		template<typename T> class Point
+		{
+		public:
+			T x, y;
+		};
+
 		typedef void (*KeyboardCallback)(Window *window, Int32 key, Int32 action,
 			Int32 modifiers);
 		typedef void (*MouseButtonCallback)(Window *window, Int32 button, Int32 action,
 			Int32 modifiers);
+		typedef void (*MouseScrollCallback)(Window *window, const Point<float> &offset);
 
 		Int32 setKeyboardCallback(Window *window, KeyboardCallback callback);
 		void removeKeyboardCallback(Window *window);
 		Int32 setMouseButtonCallback(Window *window, MouseButtonCallback callback);
 		void removeMouseButtonCallback(Window *window);
+		Int32 setMouseScrollCallback(Window *window, MouseScrollCallback callback);
+		void removeMouseScrollCallback(Window *window);
 	}
 }
 
