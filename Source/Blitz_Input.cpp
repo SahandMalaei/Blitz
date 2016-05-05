@@ -217,6 +217,15 @@ namespace blitz
 				currentMouseScrollCallback = 0;
 			}
 		}
+		Point<float> getMousePosition(Window *window)
+		{
+			double x, y;
+			glfwGetCursorPos(window->handle, &x, &y);
+			Point<float> position;
+			position.x = (float)x;
+			position.y = (float)y;
+			return position;
+		}
 	}
 }
 namespace

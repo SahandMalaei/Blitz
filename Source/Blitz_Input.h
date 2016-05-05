@@ -166,6 +166,7 @@ namespace blitz
 		void removeMouseButtonCallback(Window *window);
 		Int32 setMouseScrollCallback(Window *window, MouseScrollCallback callback);
 		void removeMouseScrollCallback(Window *window);
+		Point<float> getMousePosition(Window *window);
 	}
 }
 
