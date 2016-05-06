@@ -50,4 +50,8 @@ namespace blitz
 	{
 		return (Bool)glfwWindowShouldClose(window->handle);
 	}
+	void __swapBuffers()
+	{
+		glfwSwapBuffers(currentWindow->handle);
+	}
 }

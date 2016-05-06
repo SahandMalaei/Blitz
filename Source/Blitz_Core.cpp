@@ -14,6 +14,8 @@ namespace
 /* ----------------------------------------------------------------------------------- */
 namespace blitz
 {
+	extern void __swapBuffers();
+	/* ------------------------------------------------------------------------------- */
 	namespace __core
 	{
 		Int32 init()
@@ -49,6 +51,7 @@ namespace blitz
 				}
 			}
 			app::render(lag);
+			__swapBuffers();
 		}
 		void onEnd()
 		{

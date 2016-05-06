@@ -11,6 +11,8 @@ namespace blitz
 	void destroyWindow(Window *window);
 	Window *getCurrentWindow();
 	Bool windowShouldClose(Window *window);
+
+	void __swapBuffers();
 }
 
 #endif
