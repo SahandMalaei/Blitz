@@ -22,10 +22,6 @@ namespace blitz
 			y(y)
 		{
 		}
-		float Vec2::getLength() const
-		{
-			return sqrtf(x * x + y * y);
-		}
 		Vec2 & Vec2::operator =(const Vec2 &vector)
 		{
 			x = vector.x;
@@ -94,9 +90,13 @@ namespace blitz
 			return Vec2(vector.x / number, vector.y / number);
 		}
 		/* --------------------------------------------------------------------------- */
+		float getLength(const Vec2 &vector)
+		{
+			return sqrtf(vector.x * vector.x + vector.y * vector.y);
+		}
 		const Vec2 getNormal(const Vec2 &vector)
 		{
-			return vector / vector.getLength();
+			return vector / getLength(vector);
 		}
 		float getDotProduct(const Vec2 &vector0, const Vec2 &vector1)
 		{
@@ -104,7 +104,7 @@ namespace blitz
 		}
 		float getDistance(const Vec2 &position0, const Vec2 &position1)
 		{
-			return Vec2(position1 - position0).getLength();
+			return getLength(Vec2(position1 - position0));
 		}
 		/* --------------------------------------------------------------------------- */
 		Vec3::Vec3() :
@@ -125,10 +125,6 @@ namespace blitz
 			y(y),
 			z(y)
 		{
-		}
-		float Vec3::getLength() const
-		{
-			return sqrtf(x * x + y * y + z * z);
 		}
 		Vec3 & Vec3::operator =(const Vec3 &vector)
 		{
@@ -209,9 +205,14 @@ namespace blitz
 			return Vec3(vector.x / number, vector.y / number, vector.z / number);
 		}
 		/* --------------------------------------------------------------------------- */
+		float getLength(const Vec3 &vector)
+		{
+			return sqrtf(vector.x * vector.x + vector.y * vector.y +
+				vector.z * vector.z);
+		}
 		const Vec3 getNormal(const Vec3 &vector)
 		{
-			return vector / vector.getLength();
+			return vector / getLength(vector);
 		}
 		float getDotProduct(const Vec3 &vector0, const Vec3 &vector1)
 		{
@@ -226,7 +227,7 @@ namespace blitz
 		}
 		float getDistance(const Vec3 &position0, const Vec3 &position1)
 		{
-			return Vec3(position1 - position0).getLength();
+			return getLength(Vec3(position1 - position0));
 		}
 	}
 }
