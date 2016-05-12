@@ -17,7 +17,7 @@ namespace blitz
 			Vec2(float x, float y);
 			Vec2 & operator =(const Vec2 &vector);
 
-			float length() const;
+			float getLength() const;
 		};
 
 		Vec2 & operator +=(Vec2 &vector0, const Vec2 &vector1);
@@ -33,7 +33,7 @@ namespace blitz
 		const Vec2 operator /(const Vec2 &vector0, const Vec2 &vector1);
 		const Vec2 operator /(const Vec2 &vector, float number);
 
-		float distance(const Vec2 &position0, const Vec2 &position1);
+		float getDistance(const Vec2 &position0, const Vec2 &position1);
 
 		struct Vec3
 		{
@@ -45,7 +45,7 @@ namespace blitz
 			Vec3(float x, float y, float z);
 			Vec3 & operator =(const Vec3 &vector);
 
-			float length() const;
+			float getLength() const;
 		};
 
 		Vec3 & operator +=(Vec3 &vector0, const Vec3 &vector1);
@@ -61,7 +61,7 @@ namespace blitz
 		const Vec3 operator /(const Vec3 &vector0, const Vec3 &vector1);
 		const Vec3 operator /(const Vec3 &vector, float number);
 
-		float distance(const Vec3 &position0, const Vec3 &position1);
+		float getDistance(const Vec3 &position0, const Vec3 &position1);
 	}
 }
 

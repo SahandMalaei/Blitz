@@ -22,7 +22,7 @@ namespace blitz
 			y(y)
 		{
 		}
-		float Vec2::length() const
+		float Vec2::getLength() const
 		{
 			return sqrtf(x * x + y * y);
 		}
@@ -94,9 +94,9 @@ namespace blitz
 			return Vec2(vector.x / number, vector.y / number);
 		}
 		/* --------------------------------------------------------------------------- */
-		float distance(const Vec2 &position0, const Vec2 &position1)
+		float getDistance(const Vec2 &position0, const Vec2 &position1)
 		{
-			return Vec2(position1 - position0).length();
+			return Vec2(position1 - position0).getLength();
 		}
 		/* --------------------------------------------------------------------------- */
 		Vec3::Vec3() :
@@ -118,7 +118,7 @@ namespace blitz
 			z(y)
 		{
 		}
-		float Vec3::length() const
+		float Vec3::getLength() const
 		{
 			return sqrtf(x * x + y * y + z * z);
 		}
@@ -201,9 +201,9 @@ namespace blitz
 			return Vec3(vector.x / number, vector.y / number, vector.z / number);
 		}
 		/* --------------------------------------------------------------------------- */
-		float distance(const Vec3 &position0, const Vec3 &position1)
+		float getDistance(const Vec3 &position0, const Vec3 &position1)
 		{
-			return Vec3(position1 - position0).length();
+			return Vec3(position1 - position0).getLength();
 		}
 	}
 }
