@@ -229,5 +229,64 @@ namespace blitz
 		{
 			return getLength(Vec3(position1 - position0));
 		}
+		/* --------------------------------------------------------------------------- */
+		Matrix44::Matrix44() :
+			e00(0.0f),
+			e01(0.0f),
+			e02(0.0f),
+			e03(0.0f),
+			e10(0.0f),
+			e11(0.0f),
+			e12(0.0f),
+			e13(0.0f),
+			e20(0.0f),
+			e21(0.0f),
+			e22(0.0f),
+			e23(0.0f),
+			e30(0.0f),
+			e31(0.0f),
+			e32(0.0f),
+			e33(0.0f)
+		{
+		}
+		Matrix44::Matrix44(const Matrix44 &matrix) :
+			e00(matrix.e00),
+			e01(matrix.e01),
+			e02(matrix.e02),
+			e03(matrix.e03),
+			e10(matrix.e10),
+			e11(matrix.e11),
+			e12(matrix.e12),
+			e13(matrix.e13),
+			e20(matrix.e20),
+			e21(matrix.e21),
+			e22(matrix.e22),
+			e23(matrix.e23),
+			e30(matrix.e30),
+			e31(matrix.e31),
+			e32(matrix.e32),
+			e33(matrix.e33)
+		{
+		}
+		Matrix44 & Matrix44::operator =(const Matrix44 &matrix)
+		{
+			e00 = matrix.e00;
+			e01 = matrix.e01;
+			e02 = matrix.e02;
+			e03 = matrix.e03;
+			e10 = matrix.e10;
+			e11 = matrix.e11;
+			e12 = matrix.e12;
+			e13 = matrix.e13;
+			e20 = matrix.e20;
+			e21 = matrix.e21;
+			e22 = matrix.e22;
+			e23 = matrix.e23;
+			e30 = matrix.e30;
+			e31 = matrix.e31;
+			e32 = matrix.e32;
+			e33 = matrix.e33;
+			return *this;
+		}
 	}
 }

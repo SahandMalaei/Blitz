@@ -65,6 +65,18 @@ namespace blitz
 		float getDotProduct(const Vec3 &vector0, const Vec3 &vector1);
 		const Vec3 getCrossProduct(const Vec3 &vector0, const Vec3 &vector1);
 		float getDistance(const Vec3 &position0, const Vec3 &position1);
+
+		struct Matrix44
+		{
+			float e00, e01, e02, e03,
+				e10, e11, e12, e13,
+				e20, e21, e22, e23,
+				e30, e31, e32, e33;
+
+			Matrix44();
+			Matrix44(const Matrix44 &matrix);
+			Matrix44 & operator =(const Matrix44 &matrix);
+		};
 	}
 }
 
