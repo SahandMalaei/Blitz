@@ -94,6 +94,14 @@ namespace blitz
 			return Vec2(vector.x / number, vector.y / number);
 		}
 		/* --------------------------------------------------------------------------- */
+		const Vec2 getNormal(const Vec2 &vector)
+		{
+			return vector / vector.getLength();
+		}
+		float getDotProduct(const Vec2 &vector0, const Vec2 &vector1)
+		{
+			return (vector0.x * vector1.x) + (vector0.y * vector1.y);
+		}
 		float getDistance(const Vec2 &position0, const Vec2 &position1)
 		{
 			return Vec2(position1 - position0).getLength();
@@ -201,6 +209,21 @@ namespace blitz
 			return Vec3(vector.x / number, vector.y / number, vector.z / number);
 		}
 		/* --------------------------------------------------------------------------- */
+		const Vec3 getNormal(const Vec3 &vector)
+		{
+			return vector / vector.getLength();
+		}
+		float getDotProduct(const Vec3 &vector0, const Vec3 &vector1)
+		{
+			return (vector0.x * vector1.x) + (vector0.y * vector1.y) +
+				(vector0.z * vector1.z);
+		}
+		const Vec3 getCrossProduct(const Vec3 &vector0, const Vec3 &vector1)
+		{
+			return Vec3(vector0.y * vector1.z - vector0.z * vector1.y,
+				vector0.z * vector1.x - vector0.x * vector1.z,
+				vector0.x * vector1.y - vector0.y * vector1.x);
+		}
 		float getDistance(const Vec3 &position0, const Vec3 &position1)
 		{
 			return Vec3(position1 - position0).getLength();
