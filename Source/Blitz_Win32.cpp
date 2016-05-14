@@ -24,6 +24,7 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char *lpCmdL
 	while (!blitz::windowShouldClose(blitz::getCurrentWindow()) && !blitz::isEnded())
 	{
 		blitz::__core::update();
+		blitz::__swapBuffers();
 		glfwPollEvents();
 	}
 	blitz::__core::onEnd();
