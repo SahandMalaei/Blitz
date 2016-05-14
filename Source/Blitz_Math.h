@@ -68,10 +68,7 @@ namespace blitz
 
 		struct Matrix44
 		{
-			float e00, e01, e02, e03,
-				e10, e11, e12, e13,
-				e20, e21, e22, e23,
-				e30, e31, e32, e33;
+			float e[4][4];
 
 			Matrix44();
 			Matrix44(const Matrix44 &matrix);
