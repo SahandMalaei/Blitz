@@ -12,6 +12,11 @@ namespace blitz
 	Window *getCurrentWindow();
 	Bool windowShouldClose(Window *window);
 
+	namespace graphics
+	{
+		void setVsync(Bool state);
+	}
+
 	void __swapBuffers();
 }
 
