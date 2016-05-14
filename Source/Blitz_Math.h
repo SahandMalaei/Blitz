@@ -66,34 +66,34 @@ namespace blitz
 		const Vec3 getCrossProduct(const Vec3 &vector0, const Vec3 &vector1);
 		float getDistance(const Vec3 &position0, const Vec3 &position1);
 
-		struct Matrix44
+		struct Mat44
 		{
 			float e[4][4];
 
-			Matrix44();
-			Matrix44(const Matrix44 &matrix);
-			Matrix44 & operator =(const Matrix44 &matrix);
+			Mat44();
+			Mat44(const Mat44 &matrix);
+			Mat44 & operator =(const Mat44 &matrix);
 		};
 
-		Matrix44 & operator +=(Matrix44 &matrix0, const Matrix44 &matrix1);
-		Matrix44 & operator -=(Matrix44 &matrix0, const Matrix44 &matrix1);
-		Matrix44 & operator *=(Matrix44 &matrix, float number);
-		Matrix44 & operator /=(Matrix44 &matrix, float number);
-		Matrix44 & operator *=(Matrix44 &matrix0, const Matrix44 &matrix1);
-		const Matrix44 operator -(const Matrix44 &matrix);
-		const Matrix44 operator +(const Matrix44 &matrix0, const Matrix44 &matrix1);
-		const Matrix44 operator -(const Matrix44 &matrix0, const Matrix44 &matrix1);
-		const Matrix44 operator *(float number, const Matrix44 &matrix);
-		const Matrix44 operator *(const Matrix44 &matrix, float number);
-		const Matrix44 operator *(const Matrix44 &matrix0, const Matrix44 &matrix1);
-		const Matrix44 operator /(const Matrix44 &matrix, float number);
+		Mat44 & operator +=(Mat44 &matrix0, const Mat44 &matrix1);
+		Mat44 & operator -=(Mat44 &matrix0, const Mat44 &matrix1);
+		Mat44 & operator *=(Mat44 &matrix, float number);
+		Mat44 & operator /=(Mat44 &matrix, float number);
+		Mat44 & operator *=(Mat44 &matrix0, const Mat44 &matrix1);
+		const Mat44 operator -(const Mat44 &matrix);
+		const Mat44 operator +(const Mat44 &matrix0, const Mat44 &matrix1);
+		const Mat44 operator -(const Mat44 &matrix0, const Mat44 &matrix1);
+		const Mat44 operator *(float number, const Mat44 &matrix);
+		const Mat44 operator *(const Mat44 &matrix, float number);
+		const Mat44 operator *(const Mat44 &matrix0, const Mat44 &matrix1);
+		const Mat44 operator /(const Mat44 &matrix, float number);
 
-		void buildEmpty(Matrix44 *out_matrix);
-		void buildIdentity(Matrix44 *out_matrix);
-		void buildTranslation(Matrix44 *out_matrix, const Vec2 &translation);
-		void buildScaling(Matrix44 *out_matrix, const Vec2 &scale);
-		void buildRotation(Matrix44 *out_matrix, const Vec2 &center, float angle);
-		void buildOrthographicProjection(Matrix44 *out_matrix, float left, float right,
+		void buildEmpty(Mat44 *out_matrix);
+		void buildIdentity(Mat44 *out_matrix);
+		void buildTranslation(Mat44 *out_matrix, const Vec2 &translation);
+		void buildScaling(Mat44 *out_matrix, const Vec2 &scale);
+		void buildRotation(Mat44 *out_matrix, const Vec2 &center, float angle);
+		void buildOrthographicProjection(Mat44 *out_matrix, float left, float right,
 			float bottom, float top, float near, float far);
 	}
 }

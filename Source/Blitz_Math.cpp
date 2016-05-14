@@ -230,7 +230,7 @@ namespace blitz
 			return getLength(Vec3(position1 - position0));
 		}
 		/* --------------------------------------------------------------------------- */
-		Matrix44::Matrix44()
+		Mat44::Mat44()
 		{
 			for (Int32 i = 0; i < 4; ++i)
 			{
@@ -240,7 +240,7 @@ namespace blitz
 				}
 			}
 		}
-		Matrix44::Matrix44(const Matrix44 &matrix)
+		Mat44::Mat44(const Mat44 &matrix)
 		{
 			for (Int32 i = 0; i < 4; ++i)
 			{
@@ -250,7 +250,7 @@ namespace blitz
 				}
 			}
 		}
-		Matrix44 & Matrix44::operator =(const Matrix44 &matrix)
+		Mat44 & Mat44::operator =(const Mat44 &matrix)
 		{
 			for (Int32 i = 0; i < 4; ++i)
 			{
@@ -262,29 +262,29 @@ namespace blitz
 			return *this;
 		}
 		/* --------------------------------------------------------------------------- */
-		Matrix44 & operator +=(Matrix44 &matrix0, const Matrix44 &matrix1)
+		Mat44 & operator +=(Mat44 &matrix0, const Mat44 &matrix1)
 		{
 			return (matrix0 = matrix0 + matrix1);
 		}
-		Matrix44 & operator -=(Matrix44 &matrix0, const Matrix44 &matrix1)
+		Mat44 & operator -=(Mat44 &matrix0, const Mat44 &matrix1)
 		{
 			return (matrix0 = matrix0 - matrix1);
 		}
-		Matrix44 & operator *=(Matrix44 &matrix, float number)
+		Mat44 & operator *=(Mat44 &matrix, float number)
 		{
 			return (matrix = matrix * number);
 		}
-		Matrix44 & operator /=(Matrix44 &matrix, float number)
+		Mat44 & operator /=(Mat44 &matrix, float number)
 		{
 			return (matrix = matrix / number);
 		}
-		Matrix44 & operator *=(Matrix44 &matrix0, const Matrix44 &matrix1)
+		Mat44 & operator *=(Mat44 &matrix0, const Mat44 &matrix1)
 		{
 			return (matrix0 = matrix0 * matrix1);
 		}
-		const Matrix44 operator -(const Matrix44 &matrix)
+		const Mat44 operator -(const Mat44 &matrix)
 		{
-			Matrix44 result = matrix;
+			Mat44 result = matrix;
 			for (Int32 i = 0; i < 4; ++i)
 			{
 				for (Int32 j = 0; j < 4; ++j)
@@ -294,10 +294,10 @@ namespace blitz
 			}
 			return result;
 		}
-		const Matrix44 operator +(const Matrix44 &matrix0,
-			const Matrix44 &matrix1)
+		const Mat44 operator +(const Mat44 &matrix0,
+			const Mat44 &matrix1)
 		{
-			Matrix44 result = matrix0;
+			Mat44 result = matrix0;
 			for (Int32 i = 0; i < 4; ++i)
 			{
 				for (Int32 j = 0; j < 4; ++j)
@@ -307,14 +307,14 @@ namespace blitz
 			}
 			return result;
 		}
-		const Matrix44 operator -(const Matrix44 &matrix0,
-			const Matrix44 &matrix1)
+		const Mat44 operator -(const Mat44 &matrix0,
+			const Mat44 &matrix1)
 		{
 			return matrix0 + (-matrix1);
 		}
-		const Matrix44 operator *(float number, const Matrix44 &matrix)
+		const Mat44 operator *(float number, const Mat44 &matrix)
 		{
-			Matrix44 result = matrix;
+			Mat44 result = matrix;
 			for (Int32 i = 0; i < 4; ++i)
 			{
 				for (Int32 j = 0; j < 4; ++j)
@@ -324,14 +324,14 @@ namespace blitz
 			}
 			return result;
 		}
-		const Matrix44 operator *(const Matrix44 &matrix, float number)
+		const Mat44 operator *(const Mat44 &matrix, float number)
 		{
 			return number * matrix;
 		}
-		const Matrix44 operator *(const Matrix44 &matrix0,
-			const Matrix44 &matrix1)
+		const Mat44 operator *(const Mat44 &matrix0,
+			const Mat44 &matrix1)
 		{
-			Matrix44 result;
+			Mat44 result;
 			for (Int32 i = 0; i < 4; ++i)
 			{
 				for (Int32 j = 0; j < 4; ++j)
@@ -344,12 +344,12 @@ namespace blitz
 			}
 			return result;
 		}
-		const Matrix44 operator /(const Matrix44 &matrix, float number)
+		const Mat44 operator /(const Mat44 &matrix, float number)
 		{
 			return (1.0f / number) * matrix;
 		}
 		/* --------------------------------------------------------------------------- */
-		void buildEmpty(Matrix44 *out_matrix)
+		void buildEmpty(Mat44 *out_matrix)
 		{
 			for (Int32 i = 0; i < 4; ++i)
 			{
@@ -359,7 +359,7 @@ namespace blitz
 				}
 			}
 		}
-		void buildIdentity(Matrix44 *out_matrix)
+		void buildIdentity(Mat44 *out_matrix)
 		{
 			buildEmpty(out_matrix);
 			for (Int32 i = 0; i < 4; ++i)
@@ -367,19 +367,19 @@ namespace blitz
 				out_matrix->e[i][i] = 1.0f;
 			}
 		}
-		void buildTranslation(Matrix44 *out_matrix, const Vec2 &translation)
+		void buildTranslation(Mat44 *out_matrix, const Vec2 &translation)
 		{
 			buildIdentity(out_matrix);
 			out_matrix->e[0][3] = translation.x;
 			out_matrix->e[1][3] = translation.y;
 		}
-		void buildScaling(Matrix44 *out_matrix, const Vec2 &scale)
+		void buildScaling(Mat44 *out_matrix, const Vec2 &scale)
 		{
 			buildIdentity(out_matrix);
 			out_matrix->e[0][0] = scale.x;
 			out_matrix->e[1][1] = scale.y;
 		}
-		void buildRotation(Matrix44 *out_matrix, const Vec2 &center, float angle)
+		void buildRotation(Mat44 *out_matrix, const Vec2 &center, float angle)
 		{
 			buildIdentity(out_matrix);
 			out_matrix->e[0][0] = cosf(angle);
@@ -389,7 +389,7 @@ namespace blitz
 			out_matrix->e[2][1] = cosf(angle);
 			out_matrix->e[3][3] = center.y * (1 - cosf(angle)) + center.y * sinf(angle);
 		}
-		void buildOrthographicProjection(Matrix44 *out_matrix, float left, float right,
+		void buildOrthographicProjection(Mat44 *out_matrix, float left, float right,
 			float bottom, float top, float near, float far)
 		{
 			buildEmpty(out_matrix);
