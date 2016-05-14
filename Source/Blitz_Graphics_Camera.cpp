@@ -56,6 +56,18 @@ namespace blitz
 			angle_ = angle;
 			math::buildRotation(&viewRotation_, math::Vec2(0.0f, 0.0f), -angle);
 		}
+		math::Mat44 Camera::getViewTranslation()
+		{
+			return viewTranslation_;
+		}
+		math::Mat44 Camera::getViewRotation()
+		{
+			return viewRotation_;
+		}
+		math::Mat44 Camera::getProjection()
+		{
+			return projection_;
+		}
 		void Camera::setProjection(float left, float right, float bottom, float top,
 			float near, float far)
 		{

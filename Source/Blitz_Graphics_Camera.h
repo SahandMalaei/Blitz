@@ -21,6 +21,9 @@ namespace blitz
 			void setPosition(const math::Vec2 &position);
 			float getAngle();
 			void setAngle(float angle);
+			math::Mat44 getViewTranslation();
+			math::Mat44 getViewRotation();
+			math::Mat44 getProjection();
 			void setProjection(float left, float right, float bottom, float top,
 				float near, float far);
 		private:
