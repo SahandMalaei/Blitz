@@ -17,13 +17,13 @@ namespace blitz
 			Camera(const Camera &camera);
 			Camera & operator =(const Camera &camera);
 
-			math::Vec2 getPosition();
+			math::Vec2 getPosition() const;
 			void setPosition(const math::Vec2 &position);
-			float getAngle();
+			float getAngle() const;
 			void setAngle(float angle);
-			math::Mat44 getViewTranslation();
-			math::Mat44 getViewRotation();
-			math::Mat44 getProjection();
+			math::Mat44 getViewTranslation() const;
+			math::Mat44 getViewRotation() const;
+			math::Mat44 getProjection() const;
 			void setProjection(float left, float right, float bottom, float top,
 				float near, float far);
 		private:

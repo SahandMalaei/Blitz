@@ -38,7 +38,7 @@ namespace blitz
 			projection_ = camera.projection_;
 			return *this;
 		}
-		math::Vec2 Camera::getPosition()
+		math::Vec2 Camera::getPosition() const
 		{
 			return position_;
 		}
@@ -47,7 +47,7 @@ namespace blitz
 			position_ = position;
 			math::buildTranslation(&viewTranslation_, -position);
 		}
-		float Camera::getAngle()
+		float Camera::getAngle() const
 		{
 			return angle_;
 		}
@@ -56,15 +56,15 @@ namespace blitz
 			angle_ = angle;
 			math::buildRotation(&viewRotation_, math::Vec2(0.0f, 0.0f), -angle);
 		}
-		math::Mat44 Camera::getViewTranslation()
+		math::Mat44 Camera::getViewTranslation() const
 		{
 			return viewTranslation_;
 		}
-		math::Mat44 Camera::getViewRotation()
+		math::Mat44 Camera::getViewRotation() const
 		{
 			return viewRotation_;
 		}
-		math::Mat44 Camera::getProjection()
+		math::Mat44 Camera::getProjection() const
 		{
 			return projection_;
 		}
