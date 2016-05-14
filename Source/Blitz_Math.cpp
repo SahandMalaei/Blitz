@@ -261,5 +261,46 @@ namespace blitz
 			}
 			return *this;
 		}
+		/* --------------------------------------------------------------------------- */
+		void buildEmpty(Matrix44 *out_matrix)
+		{
+			for (Int32 i = 0; i < 4; ++i)
+			{
+				for (Int32 j = 0; j < 4; ++j)
+				{
+					out_matrix->e[i][j] = 0.0f;
+				}
+			}
+		}
+		void buildIdentity(Matrix44 *out_matrix)
+		{
+			buildEmpty(out_matrix);
+			for (Int32 i = 0; i < 4; ++i)
+			{
+				out_matrix->e[i][i] = 1.0f;
+			}
+		}
+		void buildTranslation(Matrix44 *out_matrix, const Vec2 &translation)
+		{
+			buildIdentity(out_matrix);
+			out_matrix->e[0][3] = translation.x;
+			out_matrix->e[1][3] = translation.y;
+		}
+		void buildScaling(Matrix44 *out_matrix, const Vec2 &scale)
+		{
+			buildIdentity(out_matrix);
+			out_matrix->e[0][0] = scale.x;
+			out_matrix->e[1][1] = scale.y;
+		}
+		void buildRotation(Matrix44 *out_matrix, const Vec2 &center, float angle)
+		{
+			buildIdentity(out_matrix);
+			out_matrix->e[0][0] = cosf(angle);
+			out_matrix->e[0][1] = -sinf(angle);
+			out_matrix->e[0][3] = center.x * (1 - cosf(angle)) + center.y * sinf(angle);
+			out_matrix->e[1][0] = sinf(angle);
+			out_matrix->e[2][1] = cosf(angle);
+			out_matrix->e[3][3] = center.y * (1 - cosf(angle)) + center.y * sinf(angle);
+		}
 	}
 }

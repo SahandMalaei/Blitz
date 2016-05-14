@@ -74,6 +74,12 @@ namespace blitz
 			Matrix44(const Matrix44 &matrix);
 			Matrix44 & operator =(const Matrix44 &matrix);
 		};
+
+		void buildEmpty(Matrix44 *out_matrix);
+		void buildIdentity(Matrix44 *out_matrix);
+		void buildTranslation(Matrix44 *out_matrix, const Vec2 &translation);
+		void buildScaling(Matrix44 *out_matrix, const Vec2 &scale);
+		void buildRotation(Matrix44 *out_matrix, const Vec2 &center, float angle);
 	}
 }
 
