@@ -262,6 +262,93 @@ namespace blitz
 			return *this;
 		}
 		/* --------------------------------------------------------------------------- */
+		Matrix44 & operator +=(Matrix44 &matrix0, const Matrix44 &matrix1)
+		{
+			return (matrix0 = matrix0 + matrix1);
+		}
+		Matrix44 & operator -=(Matrix44 &matrix0, const Matrix44 &matrix1)
+		{
+			return (matrix0 = matrix0 - matrix1);
+		}
+		Matrix44 & operator *=(Matrix44 &matrix, float number)
+		{
+			return (matrix = matrix * number);
+		}
+		Matrix44 & operator /=(Matrix44 &matrix, float number)
+		{
+			return (matrix = matrix / number);
+		}
+		Matrix44 & operator *=(Matrix44 &matrix0, const Matrix44 &matrix1)
+		{
+			return (matrix0 = matrix0 * matrix1);
+		}
+		const Matrix44 operator -(const Matrix44 &matrix)
+		{
+			Matrix44 result = matrix;
+			for (Int32 i = 0; i < 4; ++i)
+			{
+				for (Int32 j = 0; j < 4; ++j)
+				{
+					result.e[i][j] *= -1.0f;
+				}
+			}
+			return result;
+		}
+		const Matrix44 operator +(const Matrix44 &matrix0,
+			const Matrix44 &matrix1)
+		{
+			Matrix44 result = matrix0;
+			for (Int32 i = 0; i < 4; ++i)
+			{
+				for (Int32 j = 0; j < 4; ++j)
+				{
+					result.e[i][j] += matrix1.e[i][j];
+				}
+			}
+			return result;
+		}
+		const Matrix44 operator -(const Matrix44 &matrix0,
+			const Matrix44 &matrix1)
+		{
+			return matrix0 + (-matrix1);
+		}
+		const Matrix44 operator *(float number, const Matrix44 &matrix)
+		{
+			Matrix44 result = matrix;
+			for (Int32 i = 0; i < 4; ++i)
+			{
+				for (Int32 j = 0; j < 4; ++j)
+				{
+					result.e[i][j] *= number;
+				}
+			}
+			return result;
+		}
+		const Matrix44 operator *(const Matrix44 &matrix, float number)
+		{
+			return number * matrix;
+		}
+		const Matrix44 operator *(const Matrix44 &matrix0,
+			const Matrix44 &matrix1)
+		{
+			Matrix44 result;
+			for (Int32 i = 0; i < 4; ++i)
+			{
+				for (Int32 j = 0; j < 4; ++j)
+				{
+					for (Int32 k = 0; k < 4; ++k)
+					{
+						result.e[i][j] += matrix0.e[i][k] * matrix1.e[k][j];
+					}
+				}
+			}
+			return result;
+		}
+		const Matrix44 operator /(const Matrix44 &matrix, float number)
+		{
+			return (1.0f / number) * matrix;
+		}
+		/* --------------------------------------------------------------------------- */
 		void buildEmpty(Matrix44 *out_matrix)
 		{
 			for (Int32 i = 0; i < 4; ++i)

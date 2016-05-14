@@ -75,6 +75,19 @@ namespace blitz
 			Matrix44 & operator =(const Matrix44 &matrix);
 		};
 
+		Matrix44 & operator +=(Matrix44 &matrix0, const Matrix44 &matrix1);
+		Matrix44 & operator -=(Matrix44 &matrix0, const Matrix44 &matrix1);
+		Matrix44 & operator *=(Matrix44 &matrix, float number);
+		Matrix44 & operator /=(Matrix44 &matrix, float number);
+		Matrix44 & operator *=(Matrix44 &matrix0, const Matrix44 &matrix1);
+		const Matrix44 operator -(const Matrix44 &matrix);
+		const Matrix44 operator +(const Matrix44 &matrix0, const Matrix44 &matrix1);
+		const Matrix44 operator -(const Matrix44 &matrix0, const Matrix44 &matrix1);
+		const Matrix44 operator *(float number, const Matrix44 &matrix);
+		const Matrix44 operator *(const Matrix44 &matrix, float number);
+		const Matrix44 operator *(const Matrix44 &matrix0, const Matrix44 &matrix1);
+		const Matrix44 operator /(const Matrix44 &matrix, float number);
+
 		void buildEmpty(Matrix44 *out_matrix);
 		void buildIdentity(Matrix44 *out_matrix);
 		void buildTranslation(Matrix44 *out_matrix, const Vec2 &translation);
