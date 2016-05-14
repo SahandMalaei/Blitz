@@ -24,6 +24,8 @@ namespace blitz
 		Vec2 & operator *=(Vec2 &vector, float number);
 		Vec2 & operator /=(Vec2 &vector0, const Vec2 &vector1);
 		Vec2 & operator /=(Vec2 &vector, float number);
+		const Vec2 operator +(const Vec2 &vector);
+		const Vec2 operator -(const Vec2 &vector);
 		const Vec2 operator +(const Vec2 &vector0, const Vec2 &vector1);
 		const Vec2 operator -(const Vec2 &vector0, const Vec2 &vector1);
 		const Vec2 operator *(const Vec2 &vector0, const Vec2 &vector1);
@@ -53,6 +55,8 @@ namespace blitz
 		Vec3 & operator *=(Vec3 &vector, float number);
 		Vec3 & operator /=(Vec3 &vector0, const Vec3 &vector1);
 		Vec3 & operator /=(Vec3 &vector, float number);
+		const Vec3 operator +(const Vec3 &vector);
+		const Vec3 operator -(const Vec3 &vector);
 		const Vec3 operator +(const Vec3 &vector0, const Vec3 &vector1);
 		const Vec3 operator -(const Vec3 &vector0, const Vec3 &vector1);
 		const Vec3 operator *(const Vec3 &vector0, const Vec3 &vector1);
@@ -80,6 +84,7 @@ namespace blitz
 		Mat44 & operator *=(Mat44 &matrix, float number);
 		Mat44 & operator /=(Mat44 &matrix, float number);
 		Mat44 & operator *=(Mat44 &matrix0, const Mat44 &matrix1);
+		const Mat44 operator +(const Mat44 &matrix);
 		const Mat44 operator -(const Mat44 &matrix);
 		const Mat44 operator +(const Mat44 &matrix0, const Mat44 &matrix1);
 		const Mat44 operator -(const Mat44 &matrix0, const Mat44 &matrix1);

@@ -65,6 +65,14 @@ namespace blitz
 			vector.y /= number;
 			return vector;
 		}
+		const Vec2 operator +(const Vec2 &vector)
+		{
+			return vector;
+		}
+		const Vec2 operator -(const Vec2 vector)
+		{
+			return vector * -1.0f;
+		}
 		const Vec2 operator +(const Vec2 &vector0, const Vec2 &vector1)
 		{
 			return Vec2(vector0.x + vector1.x, vector0.y + vector1.y);
@@ -176,6 +184,14 @@ namespace blitz
 			vector.z /= number;
 			return vector;
 		}
+		const Vec3 operator +(const Vec3 &vector)
+		{
+			return vector;
+		}
+		const Vec3 operator -(const Vec3 vector)
+		{
+			return vector * -1.0f;
+		}
 		const Vec3 operator +(const Vec3 &vector0, const Vec3 &vector1)
 		{
 			return Vec3(vector0.x + vector1.x, vector0.y + vector1.y,
@@ -282,17 +298,13 @@ namespace blitz
 		{
 			return (matrix0 = matrix0 * matrix1);
 		}
+		const Mat44 operator +(const Mat44 &matrix)
+		{
+			return matrix;
+		}
 		const Mat44 operator -(const Mat44 &matrix)
 		{
-			Mat44 result = matrix;
-			for (Int32 i = 0; i < 4; ++i)
-			{
-				for (Int32 j = 0; j < 4; ++j)
-				{
-					result.e[i][j] *= -1.0f;
-				}
-			}
-			return result;
+			return -1.0f * matrix;
 		}
 		const Mat44 operator +(const Mat44 &matrix0,
 			const Mat44 &matrix1)
