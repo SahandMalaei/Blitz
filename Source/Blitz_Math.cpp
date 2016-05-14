@@ -302,5 +302,17 @@ namespace blitz
 			out_matrix->e[2][1] = cosf(angle);
 			out_matrix->e[3][3] = center.y * (1 - cosf(angle)) + center.y * sinf(angle);
 		}
+		void buildOrthographicProjection(Matrix44 *out_matrix, float left, float right,
+			float bottom, float top, float near, float far)
+		{
+			buildEmpty(out_matrix);
+			out_matrix->e[0][0] = 2.0f / (right - left);
+			out_matrix->e[0][3] = -((right + left) / (right - left));
+			out_matrix->e[1][1] = 2.0f / (top - bottom);
+			out_matrix->e[1][3] = -((top + bottom) / (top - bottom));
+			out_matrix->e[2][2] = -2.0f / (far - near);
+			out_matrix->e[2][3] = -((far + near) / (far - near));
+			out_matrix->e[3][3] = 1.0f;
+		}
 	}
 }

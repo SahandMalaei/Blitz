@@ -80,6 +80,8 @@ namespace blitz
 		void buildTranslation(Matrix44 *out_matrix, const Vec2 &translation);
 		void buildScaling(Matrix44 *out_matrix, const Vec2 &scale);
 		void buildRotation(Matrix44 *out_matrix, const Vec2 &center, float angle);
+		void buildOrthographicProjection(Matrix44 *out_matrix, float left, float right,
+			float bottom, float top, float near, float far);
 	}
 }
 
