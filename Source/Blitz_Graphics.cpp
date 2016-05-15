@@ -178,6 +178,9 @@ namespace blitz
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 			glBindTexture(GL_TEXTURE_2D, 0);
 			FreeImage_Unload(freeImageBitmap);
+			std::pair<std::string, Texture> newPair =
+				std::pair<std::string, Texture>(fileAddress, *out_texture);
+			textureList.insert(newPair);
 			return 0;
 		}
 		void unloadTexture(Texture texture)
