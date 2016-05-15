@@ -10,6 +10,7 @@ namespace
 {
 	typedef blitz::Uint32 Shader, ShaderProgram;
 	/* ------------------------------------------------------------------------------- */
+	ShaderProgram shaderProgram;
 	GLuint vertexBufferObject, indexBufferObject;
 	std::map<std::string, blitz::graphics::Texture> textureList;
 	/* ------------------------------------------------------------------------------- */
@@ -17,6 +18,7 @@ namespace
 		Shader *out_shaderObject);
 	blitz::Int32 createShaderProgram(Shader *shaderList, blitz::Int32 shaderCount,
 		ShaderProgram *out_shaderProgram);
+	int getShaderUniformVariableLocation(const char *identifier);
 	void setVertexFormat();
 	void unsetVertexFormat();
 }
@@ -257,6 +259,10 @@ namespace
 		}
 		*out_shaderProgram = shaderProgram;
 		return 0;
+	}
+	int getShaderUniformVariableLocation(const char *identifier)
+	{
+		return glGetUniformLocation(shaderProgram, identifier);
 	}
 	void setVertexFormat()
 	{
