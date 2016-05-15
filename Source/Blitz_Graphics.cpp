@@ -8,9 +8,15 @@
 /* ----------------------------------------------------------------------------------- */
 namespace
 {
+	typedef blitz::Uint32 Shader, ShaderProgram;
+	/* ------------------------------------------------------------------------------- */
 	GLuint vertexBufferObject, indexBufferObject;
 	std::map<std::string, blitz::graphics::Texture> textureList;
 	/* ------------------------------------------------------------------------------- */
+	blitz::Int32 createShader(const char *source, blitz::Uint32 glShaderType,
+		Shader *out_shaderObject);
+	blitz::Int32 createShaderProgram(Shader *shaderList, blitz::Int32 shaderCount,
+		ShaderProgram *out_shaderProgram);
 	void setVertexFormat();
 	void unsetVertexFormat();
 }
@@ -207,6 +213,51 @@ namespace blitz
 /* ----------------------------------------------------------------------------------- */
 namespace
 {
+	blitz::Int32 createShader(const char *source, blitz::Uint32 glShaderType,
+		Shader *out_shader)
+	{
+		Shader shader = glCreateShader(glShaderType);
+		if (shader == 0)
+		{
+			return 1;
+		}
+		GLint sourceLength = strlen(source);
+		glShaderSource(shader, 1, (const char **)(&source), &sourceLength);
+		glCompileShader(shader);
+		GLint success;
+		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+		if (success == 0)
+		{
+			return 1;
+		}
+		*out_shader = shader;
+		return 0;
+	}
+	blitz::Int32 createShaderProgram(Shader *shaderList, blitz::Int32 shaderCount,
+		ShaderProgram *out_shaderProgram)
+	{
+		ShaderProgram shaderProgram = glCreateProgram();
+		for (blitz::Int32 i = 0; i < shaderCount; ++i)
+		{
+			glAttachShader(shaderProgram, shaderList[i]);
+		}
+		glLinkProgram(shaderProgram);
+		GLint success = 0;
+		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+		if (success == 0)
+		{
+			return 1;
+		}
+		glValidateProgram(shaderProgram);
+		success = 0;
+		glGetProgramiv(shaderProgram, GL_VALIDATE_STATUS, &success);
+		if (success == 0)
+		{
+			return 1;
+		}
+		*out_shaderProgram = shaderProgram;
+		return 0;
+	}
 	void setVertexFormat()
 	{
 		glEnableVertexAttribArray(0);
