@@ -1,9 +1,20 @@
 #include "Blitz_Graphics.h"
 /* ----------------------------------------------------------------------------------- */
+#include <map>
+#include <string>
+/* ----------------------------------------------------------------------------------- */
+#include "GL/glew.h"
+#include "FreeImage/FreeImage.h"
+/* ----------------------------------------------------------------------------------- */
 namespace blitz
 {
 	namespace graphics
 	{
+		namespace
+		{
+			std::map<std::string, Texture> textureList;
+		}
+		/* --------------------------------------------------------------------------- */
 		ColorRgb::ColorRgb() :
 			r(0.0f),
 			g(0.0f),
@@ -82,6 +93,91 @@ namespace blitz
 			color = vertex.color;
 			textureCoordinates = vertex.textureCoordinates;
 			return *this;
+		}
+		/* --------------------------------------------------------------------------- */
+		Int32 loadTexture(const char *fileAddress, Texture *out_texture)
+		{
+			auto existingTexture = textureList.find(std::string(fileAddress));
+			if (existingTexture != textureList.end())
+			{
+				*out_texture = existingTexture->second;
+				return 0;
+			}
+			FREE_IMAGE_FORMAT freeImageFormat;
+			freeImageFormat = FreeImage_GetFileType(fileAddress, 0);
+			if (freeImageFormat == FIF_UNKNOWN)
+			{
+				freeImageFormat = FreeImage_GetFIFFromFilename(fileAddress);
+			}
+			if (freeImageFormat == FIF_UNKNOWN)
+			{
+				return 1;
+			}
+			Bool loadAlphaChannel = 0;
+			switch (freeImageFormat)
+			{
+			case FIF_BMP:
+			case FIF_GIF:
+			case FIF_JPEG:
+				loadAlphaChannel = 0;
+				break;
+			case FIF_DDS:
+			case FIF_PNG:
+			case FIF_TARGA:
+				loadAlphaChannel = 1;
+				break;
+			}
+			if (FreeImage_FIFSupportsReading(freeImageFormat) == 0)
+			{
+				return 1;
+			}
+			FIBITMAP *freeImageBitmap = FreeImage_Load(freeImageFormat, fileAddress, 0);
+			if (freeImageBitmap == 0)
+			{
+				return 1;
+			}
+			BYTE *imageData = FreeImage_GetBits(freeImageBitmap);
+			if (imageData == 0)
+			{
+				return 1;
+			}
+			Int32 imageWidth = FreeImage_GetWidth(freeImageBitmap),
+				imageHeight = FreeImage_GetHeight(freeImageBitmap);
+			if (imageWidth <= 0 || imageHeight <= 0)
+			{
+				return 1;
+			}
+			glGenTextures(1, out_texture);
+			glBindTexture(GL_TEXTURE_2D, *out_texture);
+			GLint imageFormat = loadAlphaChannel ? GL_BGRA : GL_BGR;
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, imageWidth, imageHeight, 0,
+				imageFormat, GL_UNSIGNED_BYTE, imageData);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			FreeImage_Unload(freeImageBitmap);
+			return 0;
+		}
+		void unloadTexture(Texture texture)
+		{
+			Bool textureExists = 0;
+			for (auto listIterator = textureList.begin();
+				listIterator != textureList.end(); ++listIterator)
+			{
+				if (listIterator->second == texture)
+				{
+					textureList.erase(listIterator);
+					textureExists = 1;
+					break;
+				}
+			}
+			if (!textureExists)
+			{
+				return;
+			}
+			glDeleteTextures(1, &texture);
 		}
 	}
 }

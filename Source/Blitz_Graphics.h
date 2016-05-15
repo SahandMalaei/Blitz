@@ -40,6 +40,11 @@ namespace blitz
 			Vertex(const Vertex &vertex);
 			Vertex & operator =(const Vertex &vertex);
 		};
+
+		typedef Uint32 Texture;
+
+		Int32 loadTexture(const char *fileAddress, Texture *out_texture);
+		void unloadTexture(Texture texture);
 	}
 }
 
