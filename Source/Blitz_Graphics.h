@@ -41,6 +41,10 @@ namespace blitz
 			Vertex & operator =(const Vertex &vertex);
 		};
 
+		void clear(const ColorRgba &color);
+		void draw(Vertex *vertexList, Int32 vertexCount,
+			Uint32 *indexList, Int32 indexCount);
+
 		typedef Uint32 Texture;
 
 		Int32 loadTexture(const char *fileAddress, Texture *out_texture);
