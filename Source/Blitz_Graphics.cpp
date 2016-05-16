@@ -1,4 +1,5 @@
 #include "Blitz_Graphics.h"
+#include "Blitz_Graphics_Core.h"
 /* ----------------------------------------------------------------------------------- */
 #include <map>
 #include <string>
@@ -11,8 +12,59 @@ namespace
 	typedef blitz::Uint32 Shader, ShaderProgram;
 	/* ------------------------------------------------------------------------------- */
 	ShaderProgram shaderProgram;
-	GLuint vertexBufferObject, indexBufferObject;
+	GLuint vertexBuffer, indexBuffer;
 	std::map<std::string, blitz::graphics::Texture> textureList;
+	blitz::Int32 objectTransformLocation, viewTranslationTransformLocation,
+		viewRotationTransformLocation, projectionTransformLocation,
+		textureSamplerLocation, useTextureLocation;
+	/* ------------------------------------------------------------------------------- */
+	const char * const DEFAULT_VERTEX_SHADER_SOURCE =
+		"#version 140\n\
+		\n\
+		in vec3 position;\n\
+		in vec4 color;\n\
+		in vec2 textureCoordinates;\n\
+		\n\
+		uniform mat4 objectTransform, viewTranslationTransform,\n\
+			viewRotationTransform,	projectionTransform;\n\
+		\n\
+		out vec3 fragmentPosition;\n\
+		out vec4 fragmentColor;\n\
+		out vec2 fragmentTextureCoordinates;\n\
+		\n\
+		void main()\n\
+		{\n\
+			gl_Position = projectionTransform * viewTranslationTransform *\n\
+				viewRotationTransform * objectTransform * vec4(position, 1.0f);\n\
+			fragmentPosition = (objectTransform * vec4(position, 1.0f)).xyz;\n\
+			fragmentColor = color;\n\
+			fragmentTextureCoordinates = textureCoordinates;\n\
+		}";
+	/* ------------------------------------------------------------------------------- */
+	const char * const DEFAULT_FRAGMENT_SHADER_SOURCE =
+		"#version 140\n\
+		\n\
+		in vec3 fragmentPosition;\n\
+		in vec4 fragmentColor;\n\
+		in vec2 fragmentTextureCoordinates;\n\
+		\n\
+		out vec4 color;\n\
+		\n\
+		uniform sampler2D textureSampler;\n\
+		uniform bool useTexture;\n\
+		\n\
+		void main()\n\
+		{\n\
+			if (useTexture)\n\
+			{\n\
+				color = fragmentColor *\n\
+					texture2D(textureSampler, fragmentTextureCoordinates);\n\
+			}\n\
+			else\n\
+			{\n\
+				color = fragmentColor;\n\
+			}\n\
+		}";
 	/* ------------------------------------------------------------------------------- */
 	blitz::Int32 createShader(const char *source, blitz::Uint32 glShaderType,
 		Shader *out_shaderObject);
@@ -21,6 +73,11 @@ namespace
 	int getShaderUniformVariableLocation(const char *identifier);
 	void setVertexFormat();
 	void unsetVertexFormat();
+	/* ------------------------------------------------------------------------------- */
+	blitz::Int32 setInitialRenderStates();
+	blitz::Int32 initDefaultShaders();
+	blitz::Int32 initDefaultShadersUniformVariables();
+	void updateDefaultShadersUniformVariables();
 }
 /* ----------------------------------------------------------------------------------- */
 namespace blitz
@@ -115,8 +172,8 @@ namespace blitz
 		void draw(Vertex *vertexList, Int32 vertexCount,
 			Uint32 *indexList, Int32 indexCount)
 		{
-			glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
+			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexCount, vertexList, GL_DYNAMIC_DRAW);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indexCount, indexList, GL_DYNAMIC_DRAW);
 			setVertexFormat();
@@ -210,6 +267,40 @@ namespace blitz
 			}
 			glDeleteTextures(1, &texture);
 		}
+		/* --------------------------------------------------------------------------- */
+		namespace __core
+		{
+			Int32 init()
+			{
+				Int32 result = setInitialRenderStates();
+				if (result != 0)
+				{
+					return 1;
+				}
+				result = initDefaultShaders();
+				if (result != 0)
+				{
+					return 1;
+				}
+				result = initDefaultShadersUniformVariables();
+				if (result != 0)
+				{
+					return 1;
+				}
+				return 0;
+			}
+			void beginRender()
+			{
+				glUseProgram(shaderProgram);
+				updateDefaultShadersUniformVariables();
+			}
+			void endRender()
+			{
+			}
+			void onEnd()
+			{
+			}
+		}
 	}
 }
 /* ----------------------------------------------------------------------------------- */
@@ -280,5 +371,74 @@ namespace
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
+	}
+	/* ------------------------------------------------------------------------------- */
+	blitz::Int32 setInitialRenderStates()
+	{
+		GLenum result = glewInit();
+		if (result != GLEW_OK)
+		{
+			return 1;
+		}
+		glGenBuffers(1, &vertexBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glGenBuffers(1, &indexBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+		glEnable(GL_DEPTH_TEST);
+		glFrontFace(GL_CW);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		glDepthFunc(GL_LEQUAL);
+		return 0;
+	}
+	blitz::Int32 initDefaultShaders()
+	{
+		Shader shaderList[2];
+		blitz::Int32 result = createShader(DEFAULT_VERTEX_SHADER_SOURCE,
+			GL_VERTEX_SHADER, &shaderList[0]);
+		if (result != 0)
+		{
+			return 1;
+		}
+		result = createShader(DEFAULT_FRAGMENT_SHADER_SOURCE,
+			GL_FRAGMENT_SHADER, &shaderList[1]);
+		if (result != 0)
+		{
+			return 1;
+		}
+		result = createShaderProgram(shaderList, 2, &shaderProgram);
+		if (result != 0)
+		{
+			return 1;
+		}
+		glUseProgram(shaderProgram);
+		return 0;
+	}
+	blitz::Int32 initDefaultShadersUniformVariables()
+	{
+		objectTransformLocation = getShaderUniformVariableLocation("objectTransform");
+		viewTranslationTransformLocation =
+			getShaderUniformVariableLocation("viewTranslationTransform");
+		viewRotationTransformLocation =
+			getShaderUniformVariableLocation("viewRotationTransform");
+		projectionTransformLocation =
+			getShaderUniformVariableLocation("projectionTransform");
+		textureSamplerLocation = getShaderUniformVariableLocation("textureSampler");
+		useTextureLocation = getShaderUniformVariableLocation("useTexture");
+		return 0;
+	}
+	void updateDefaultShadersUniformVariables()
+	{
+		blitz::math::Mat44 identityMatrix;
+		blitz::math::buildIdentity(&identityMatrix);
+		glUniformMatrix4fv(objectTransformLocation, 1, GL_TRUE, &identityMatrix.e[0][0]);
+		glUniformMatrix4fv(viewTranslationTransformLocation, 1, GL_TRUE,
+			&identityMatrix.e[0][0]);
+		glUniformMatrix4fv(viewRotationTransformLocation, 1, GL_TRUE,
+			&identityMatrix.e[0][0]);
+		glUniformMatrix4fv(projectionTransformLocation, 1, GL_TRUE,
+			&identityMatrix.e[0][0]);
+		glUniform1i(textureSamplerLocation, 0);
+		glUniform1i(useTextureLocation, 0);
 	}
 }

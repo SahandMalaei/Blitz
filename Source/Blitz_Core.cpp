@@ -1,6 +1,7 @@
 #include "Blitz_Core.h"
 /* ----------------------------------------------------------------------------------- */
 #include "Blitz_Timer.h"
+#include "Blitz_Graphics_Core.h"
 /* ----------------------------------------------------------------------------------- */
 namespace
 {
@@ -21,6 +22,11 @@ namespace blitz
 			targetFrameRate = DEFAULT_TARGET_FRAME_RATE;
 			appEnded = 0;
 			Int32 result = app::init();
+			if (result != 0)
+			{
+				return 1;
+			}
+			result = graphics::__core::init();
 			if (result != 0)
 			{
 				return 1;
@@ -48,11 +54,14 @@ namespace blitz
 					break;
 				}
 			}
+			graphics::__core::beginRender();
 			app::render(lag);
+			graphics::__core::endRender();
 		}
 		void onEnd()
 		{
 			app::onEnd();
+			graphics::__core::onEnd();
 		}
 	}
 	/* ------------------------------------------------------------------------------- */
