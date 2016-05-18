@@ -447,10 +447,6 @@ namespace
 			getShaderUniformVariableLocation("projectionTransform");
 		textureSamplerLocation = getShaderUniformVariableLocation("textureSampler");
 		useTextureLocation = getShaderUniformVariableLocation("useTexture");
-		return 0;
-	}
-	void updateDefaultShadersUniformVariables()
-	{
 		blitz::math::Mat44 identityMatrix;
 		blitz::math::buildIdentity(&identityMatrix);
 		glUniformMatrix4fv(objectTransformLocation, 1, GL_TRUE, &identityMatrix.e[0][0]);
@@ -458,6 +454,10 @@ namespace
 			&identityMatrix.e[0][0]);
 		glUniformMatrix4fv(projectionTransformLocation, 1, GL_TRUE,
 			&identityMatrix.e[0][0]);
+		return 0;
+	}
+	void updateDefaultShadersUniformVariables()
+	{
 		if (currentCamera)
 		{
 			blitz::graphics::setViewTransform(currentCamera->getView());
