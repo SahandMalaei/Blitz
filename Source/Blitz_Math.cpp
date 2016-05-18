@@ -69,7 +69,7 @@ namespace blitz
 		{
 			return vector;
 		}
-		const Vec2 operator -(const Vec2 vector)
+		const Vec2 operator -(const Vec2 &vector)
 		{
 			return vector * -1.0f;
 		}
@@ -131,7 +131,7 @@ namespace blitz
 		Vec3::Vec3(float x, float y, float z) :
 			x(x),
 			y(y),
-			z(y)
+			z(z)
 		{
 		}
 		Vec3 & Vec3::operator =(const Vec3 &vector)
@@ -188,7 +188,7 @@ namespace blitz
 		{
 			return vector;
 		}
-		const Vec3 operator -(const Vec3 vector)
+		const Vec3 operator -(const Vec3 &vector)
 		{
 			return vector * -1.0f;
 		}
@@ -396,10 +396,12 @@ namespace blitz
 			buildIdentity(out_matrix);
 			out_matrix->e[0][0] = cosf(angle);
 			out_matrix->e[0][1] = -sinf(angle);
-			out_matrix->e[0][3] = center.x * (1 - cosf(angle)) + center.y * sinf(angle);
+			out_matrix->e[0][3] = center.x *
+				(1.0f - cosf(angle)) + center.y * sinf(angle);
 			out_matrix->e[1][0] = sinf(angle);
-			out_matrix->e[2][1] = cosf(angle);
-			out_matrix->e[3][3] = center.y * (1 - cosf(angle)) + center.y * sinf(angle);
+			out_matrix->e[1][1] = cosf(angle);
+			out_matrix->e[1][3] = center.y *
+				(1.0f - cosf(angle)) - center.x * sinf(angle);
 		}
 		void buildOrthographicProjection(Mat44 *out_matrix, float left, float right,
 			float bottom, float top, float near, float far)

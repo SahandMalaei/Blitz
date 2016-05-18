@@ -9,7 +9,6 @@ namespace blitz
 	{
 		struct Vec2
 		{
-		public:
 			float x, y;
 
 			Vec2();
@@ -40,7 +39,6 @@ namespace blitz
 
 		struct Vec3
 		{
-		public:
 			float x, y, z;
 
 			Vec3();
