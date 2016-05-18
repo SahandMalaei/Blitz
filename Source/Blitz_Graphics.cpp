@@ -29,7 +29,6 @@ namespace
 		\n\
 		uniform mat4 objectTransform, viewTransform, projectionTransform;\n\
 		\n\
-		out vec3 fragmentPosition;\n\
 		out vec4 fragmentColor;\n\
 		out vec2 fragmentTextureCoordinates;\n\
 		\n\
@@ -37,7 +36,6 @@ namespace
 		{\n\
 			gl_Position = projectionTransform * viewTransform * objectTransform *\n\
 				vec4(position, 1.0f);\n\
-			fragmentPosition = (objectTransform * vec4(position, 1.0f)).xyz;\n\
 			fragmentColor = color;\n\
 			fragmentTextureCoordinates = textureCoordinates;\n\
 		}";
@@ -45,7 +43,6 @@ namespace
 	const char * const DEFAULT_FRAGMENT_SHADER_SOURCE =
 		"#version 140\n\
 		\n\
-		in vec3 fragmentPosition;\n\
 		in vec4 fragmentColor;\n\
 		in vec2 fragmentTextureCoordinates;\n\
 		\n\
