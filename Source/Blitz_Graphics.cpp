@@ -64,10 +64,10 @@ namespace
 			}\n\
 		}";
 	/* ------------------------------------------------------------------------------- */
-	blitz::Int32 createShader(const char *source, blitz::Uint32 glShaderType,
-		Shader *out_shaderObject);
-	blitz::Int32 createShaderProgram(Shader *shaderList, blitz::Int32 shaderCount,
-		ShaderProgram *out_shaderProgram);
+	blitz::Int32 createShader(Shader *out_shader, const char *source,
+		blitz::Uint32 glShaderType);
+	blitz::Int32 createShaderProgram(ShaderProgram *out_shaderProgram,
+		Shader *shaderList, blitz::Int32 shaderCount);
 	blitz::Int32 getShaderUniformVariableLocation(const char *identifier);
 	void setVertexFormat();
 	void unsetVertexFormat();
@@ -180,7 +180,7 @@ namespace blitz
 			glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
 			unsetVertexFormat();
 		}
-		Int32 loadTexture(const char *fileAddress, Texture *out_texture)
+		Int32 loadTexture(Texture *out_texture, const char *fileAddress)
 		{
 			auto existingTexture = textureList.find(std::string(fileAddress));
 			if (existingTexture != textureList.end())
@@ -348,8 +348,8 @@ namespace blitz
 /* ----------------------------------------------------------------------------------- */
 namespace
 {
-	blitz::Int32 createShader(const char *source, blitz::Uint32 glShaderType,
-		Shader *out_shader)
+	blitz::Int32 createShader(Shader *out_shader, const char *source,
+		blitz::Uint32 glShaderType)
 	{
 		Shader shader = glCreateShader(glShaderType);
 		if (shader == 0)
@@ -368,8 +368,8 @@ namespace
 		*out_shader = shader;
 		return 0;
 	}
-	blitz::Int32 createShaderProgram(Shader *shaderList, blitz::Int32 shaderCount,
-		ShaderProgram *out_shaderProgram)
+	blitz::Int32 createShaderProgram(ShaderProgram *out_shaderProgram,
+		Shader *shaderList, blitz::Int32 shaderCount)
 	{
 		ShaderProgram shaderProgram = glCreateProgram();
 		for (blitz::Int32 i = 0; i < shaderCount; ++i)
@@ -436,19 +436,19 @@ namespace
 	blitz::Int32 initDefaultShaders()
 	{
 		Shader shaderList[2];
-		blitz::Int32 result = createShader(DEFAULT_VERTEX_SHADER_SOURCE,
-			GL_VERTEX_SHADER, &shaderList[0]);
+		blitz::Int32 result = createShader(&shaderList[0], DEFAULT_VERTEX_SHADER_SOURCE,
+			GL_VERTEX_SHADER);
 		if (result != 0)
 		{
 			return 1;
 		}
-		result = createShader(DEFAULT_FRAGMENT_SHADER_SOURCE,
-			GL_FRAGMENT_SHADER, &shaderList[1]);
+		result = createShader(&shaderList[1], DEFAULT_FRAGMENT_SHADER_SOURCE,
+			GL_FRAGMENT_SHADER);
 		if (result != 0)
 		{
 			return 1;
 		}
-		result = createShaderProgram(shaderList, 2, &shaderProgram);
+		result = createShaderProgram(&shaderProgram, shaderList, 2);
 		if (result != 0)
 		{
 			return 1;
