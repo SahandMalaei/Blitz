@@ -267,6 +267,25 @@ namespace blitz
 			}
 			glDeleteTextures(1, &texture);
 		}
+		void setTexture(Texture texture)
+		{
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, texture);
+			if (texture != 0)
+			{
+				glUniform1i(useTextureLocation, 1);
+			}
+			else
+			{
+				glUniform1i(useTextureLocation, 0);
+			}
+		}
+		void unsetTexture()
+		{
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glUniform1i(useTextureLocation, 0);
+		}
 		void setObjectTransform(const math::Mat44 &transform)
 		{
 			glUniformMatrix4fv(objectTransformLocation, 1, GL_TRUE,
@@ -445,7 +464,9 @@ namespace
 		projectionTransformLocation =
 			getShaderUniformVariableLocation("projectionTransform");
 		textureSamplerLocation = getShaderUniformVariableLocation("textureSampler");
+		glUniform1i(textureSamplerLocation, 0);
 		useTextureLocation = getShaderUniformVariableLocation("useTexture");
+		glUniform1i(useTextureLocation, 0);
 		blitz::math::Mat44 identityMatrix;
 		blitz::math::buildIdentity(&identityMatrix);
 		glUniformMatrix4fv(objectTransformLocation, 1, GL_TRUE, &identityMatrix.e[0][0]);
@@ -462,7 +483,5 @@ namespace
 			blitz::graphics::setViewTransform(currentCamera->getView());
 			blitz::graphics::setProjectionTransform(currentCamera->getProjection());
 		}
-		glUniform1i(textureSamplerLocation, 0);
-		glUniform1i(useTextureLocation, 0);
 	}
 }
