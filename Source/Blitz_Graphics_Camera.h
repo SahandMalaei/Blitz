@@ -21,15 +21,16 @@ namespace blitz
 			void setPosition(const math::Vec2 &position);
 			float getAngle() const;
 			void setAngle(float angle);
-			math::Mat44 getViewTranslation() const;
-			math::Mat44 getViewRotation() const;
+			math::Mat44 getView() const;
 			math::Mat44 getProjection() const;
 			void setProjection(float left, float right, float bottom, float top,
 				float near, float far);
 		private:
 			math::Vec2 position_;
 			float angle_;
-			math::Mat44 viewTranslation_, viewRotation_, projection_;
+			mutable math::Mat44 view_, viewTranslation_, viewRotation_, projection_;
+			mutable Bool viewTranslationValid_, viewRotationValid_;
+			math::Vec2 viewportCenter_;
 		};
 	}
 }
