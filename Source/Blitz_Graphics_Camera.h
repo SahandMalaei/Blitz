@@ -1,5 +1,5 @@
-#ifndef BLITZ_CAMERA_H
-#define BLITZ_CAMERA_H 1
+#ifndef BLITZ_GRAPHICS_CAMERA_H
+#define BLITZ_GRAPHICS_CAMERA_H 1
 
 #include "Blitz_BaseTypes.h"
 #include "Blitz_Math.h"
