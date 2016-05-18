@@ -49,6 +49,10 @@ namespace blitz
 
 		Int32 loadTexture(const char *fileAddress, Texture *out_texture);
 		void unloadTexture(Texture texture);
+
+		void setObjectTransform(const math::Mat44 &transform);
+		void setViewTransform(const math::Mat44 &transform);
+		void setProjectionTransform(const math::Mat44 &transform);
 	}
 }
 

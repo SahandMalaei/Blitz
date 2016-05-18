@@ -14,9 +14,8 @@ namespace
 	ShaderProgram shaderProgram;
 	GLuint vertexBuffer, indexBuffer;
 	std::map<std::string, blitz::graphics::Texture> textureList;
-	blitz::Int32 objectTransformLocation, viewTranslationTransformLocation,
-		viewRotationTransformLocation, projectionTransformLocation,
-		textureSamplerLocation, useTextureLocation;
+	blitz::Int32 objectTransformLocation, viewTransformLocation,
+		projectionTransformLocation, textureSamplerLocation, useTextureLocation;
 	/* ------------------------------------------------------------------------------- */
 	const char * const DEFAULT_VERTEX_SHADER_SOURCE =
 		"#version 140\n\
@@ -25,8 +24,7 @@ namespace
 		in vec4 color;\n\
 		in vec2 textureCoordinates;\n\
 		\n\
-		uniform mat4 objectTransform, viewTranslationTransform,\n\
-			viewRotationTransform,	projectionTransform;\n\
+		uniform mat4 objectTransform, viewTransform, projectionTransform;\n\
 		\n\
 		out vec3 fragmentPosition;\n\
 		out vec4 fragmentColor;\n\
@@ -34,8 +32,8 @@ namespace
 		\n\
 		void main()\n\
 		{\n\
-			gl_Position = projectionTransform * viewTranslationTransform *\n\
-				viewRotationTransform * objectTransform * vec4(position, 1.0f);\n\
+			gl_Position = projectionTransform * viewTransform * objectTransform *\n\
+				vec4(position, 1.0f);\n\
 			fragmentPosition = (objectTransform * vec4(position, 1.0f)).xyz;\n\
 			fragmentColor = color;\n\
 			fragmentTextureCoordinates = textureCoordinates;\n\
@@ -267,6 +265,21 @@ namespace blitz
 			}
 			glDeleteTextures(1, &texture);
 		}
+		void setObjectTransform(const math::Mat44 &transform)
+		{
+			glUniformMatrix4fv(objectTransformLocation, 1, GL_TRUE,
+				&transform.e[0][0]);
+		}
+		void setViewTransform(const math::Mat44 &transform)
+		{
+			glUniformMatrix4fv(viewTransformLocation, 1, GL_TRUE,
+				&transform.e[0][0]);
+		}
+		void setProjectionTransform(const math::Mat44 &transform)
+		{
+			glUniformMatrix4fv(projectionTransformLocation, 1, GL_TRUE,
+				&transform.e[0][0]);
+		}
 		/* --------------------------------------------------------------------------- */
 		namespace __core
 		{
@@ -417,10 +430,8 @@ namespace
 	blitz::Int32 initDefaultShadersUniformVariables()
 	{
 		objectTransformLocation = getShaderUniformVariableLocation("objectTransform");
-		viewTranslationTransformLocation =
-			getShaderUniformVariableLocation("viewTranslationTransform");
-		viewRotationTransformLocation =
-			getShaderUniformVariableLocation("viewRotationTransform");
+		viewTransformLocation =
+			getShaderUniformVariableLocation("viewTransform");
 		projectionTransformLocation =
 			getShaderUniformVariableLocation("projectionTransform");
 		textureSamplerLocation = getShaderUniformVariableLocation("textureSampler");
@@ -432,9 +443,7 @@ namespace
 		blitz::math::Mat44 identityMatrix;
 		blitz::math::buildIdentity(&identityMatrix);
 		glUniformMatrix4fv(objectTransformLocation, 1, GL_TRUE, &identityMatrix.e[0][0]);
-		glUniformMatrix4fv(viewTranslationTransformLocation, 1, GL_TRUE,
-			&identityMatrix.e[0][0]);
-		glUniformMatrix4fv(viewRotationTransformLocation, 1, GL_TRUE,
+		glUniformMatrix4fv(viewTransformLocation, 1, GL_TRUE,
 			&identityMatrix.e[0][0]);
 		glUniformMatrix4fv(projectionTransformLocation, 1, GL_TRUE,
 			&identityMatrix.e[0][0]);
