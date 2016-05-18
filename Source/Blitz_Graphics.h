@@ -53,6 +53,11 @@ namespace blitz
 		void setObjectTransform(const math::Mat44 &transform);
 		void setViewTransform(const math::Mat44 &transform);
 		void setProjectionTransform(const math::Mat44 &transform);
+
+		class Camera;
+
+		void setCamera(Camera *camera);
+		void unsetCamera();
 	}
 }
 

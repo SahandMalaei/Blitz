@@ -7,6 +7,8 @@
 #include "GL/glew.h"
 #include "FreeImage/FreeImage.h"
 /* ----------------------------------------------------------------------------------- */
+#include "Blitz_Graphics_Camera.h"
+/* ----------------------------------------------------------------------------------- */
 namespace
 {
 	typedef blitz::Uint32 Shader, ShaderProgram;
@@ -16,6 +18,7 @@ namespace
 	std::map<std::string, blitz::graphics::Texture> textureList;
 	blitz::Int32 objectTransformLocation, viewTransformLocation,
 		projectionTransformLocation, textureSamplerLocation, useTextureLocation;
+	blitz::graphics::Camera *currentCamera = 0;
 	/* ------------------------------------------------------------------------------- */
 	const char * const DEFAULT_VERTEX_SHADER_SOURCE =
 		"#version 140\n\
@@ -280,6 +283,14 @@ namespace blitz
 			glUniformMatrix4fv(projectionTransformLocation, 1, GL_TRUE,
 				&transform.e[0][0]);
 		}
+		void setCamera(Camera *camera)
+		{
+			currentCamera = camera;
+		}
+		void unsetCamera()
+		{
+			currentCamera = 0;
+		}
 		/* --------------------------------------------------------------------------- */
 		namespace __core
 		{
@@ -447,6 +458,11 @@ namespace
 			&identityMatrix.e[0][0]);
 		glUniformMatrix4fv(projectionTransformLocation, 1, GL_TRUE,
 			&identityMatrix.e[0][0]);
+		if (currentCamera)
+		{
+			blitz::graphics::setViewTransform(currentCamera->getView());
+			blitz::graphics::setProjectionTransform(currentCamera->getProjection());
+		}
 		glUniform1i(textureSamplerLocation, 0);
 		glUniform1i(useTextureLocation, 0);
 	}
