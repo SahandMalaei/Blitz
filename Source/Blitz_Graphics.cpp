@@ -325,14 +325,6 @@ namespace blitz
 		{
 			glDisable(GL_BLEND);
 		}
-		void enableSolidFill()
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		}
-		void enableWireframe()
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		}
 		/* --------------------------------------------------------------------------- */
 		namespace __core
 		{

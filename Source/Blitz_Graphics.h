@@ -64,9 +64,6 @@ namespace blitz
 		void enableAlphaBlending();
 		void enableAdditiveBlending();
 		void disableBlending();
-
-		void enableSolidFill();
-		void enableWireframe();
 	}
 }
 

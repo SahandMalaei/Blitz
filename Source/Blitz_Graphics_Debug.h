@@ -7,6 +7,8 @@ namespace blitz
 	{
 		namespace debug
 		{
+			void enableSolidFill();
+			void enableWireframe();
 		}
 	}
 }
