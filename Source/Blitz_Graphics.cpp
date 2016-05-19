@@ -179,7 +179,7 @@ namespace blitz
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexCount, vertexList,
 				GL_DYNAMIC_DRAW);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indexCount,
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Uint32) * indexCount,
 				indexList, GL_DYNAMIC_DRAW);
 			__setVertexFormat();
 			glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
