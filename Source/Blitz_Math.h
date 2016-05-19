@@ -31,6 +31,8 @@ namespace blitz
 		const Vec2 operator *(const Vec2 &vector, float number);
 		const Vec2 operator /(const Vec2 &vector0, const Vec2 &vector1);
 		const Vec2 operator /(const Vec2 &vector, float number);
+		Bool operator ==(const Vec2 &vector0, const Vec2 &vector1);
+		Bool operator !=(const Vec2 &vector0, const Vec2 &vector1);
 		
 		float getLength(const Vec2 &vector);
 		const Vec2 getNormal(const Vec2 &vector);
@@ -61,6 +63,8 @@ namespace blitz
 		const Vec3 operator *(const Vec3 &vector, float number);
 		const Vec3 operator /(const Vec3 &vector0, const Vec3 &vector1);
 		const Vec3 operator /(const Vec3 &vector, float number);
+		Bool operator ==(const Vec3 &vector0, const Vec3 &vector1);
+		Bool operator !=(const Vec3 &vector0, const Vec3 &vector1);
 
 		float getLength(const Vec3 &vector);
 		const Vec3 getNormal(const Vec3 &vector);
@@ -90,6 +94,8 @@ namespace blitz
 		const Mat44 operator *(const Mat44 &matrix, float number);
 		const Mat44 operator *(const Mat44 &matrix0, const Mat44 &matrix1);
 		const Mat44 operator /(const Mat44 &matrix, float number);
+		Bool operator ==(const Mat44 &matrix0, const Mat44 &matrix1);
+		Bool operator !=(const Mat44 &matrix0, const Mat44 &matrix1);
 
 		void buildEmpty(Mat44 *out_matrix);
 		void buildIdentity(Mat44 *out_matrix);

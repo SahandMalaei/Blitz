@@ -97,6 +97,14 @@ namespace blitz
 		{
 			return Vec2(vector.x / number, vector.y / number);
 		}
+		Bool operator ==(const Vec2 &vector0, const Vec2 &vector1)
+		{
+			return vector0.x == vector1.x && vector0.y == vector1.y;
+		}
+		Bool operator !=(const Vec2 &vector0, const Vec2 &vector1)
+		{
+			return !(vector0 == vector1);
+		}
 		/* --------------------------------------------------------------------------- */
 		float getLength(const Vec2 &vector)
 		{
@@ -219,6 +227,15 @@ namespace blitz
 		const Vec3 operator /(const Vec3 &vector, float number)
 		{
 			return Vec3(vector.x / number, vector.y / number, vector.z / number);
+		}
+		Bool operator ==(const Vec3 &vector0, const Vec3 &vector1)
+		{
+			return vector0.x == vector1.x && vector0.y == vector1.y &&
+				vector0.z == vector1.z;
+		}
+		Bool operator !=(const Vec3 &vector0, const Vec3 &vector1)
+		{
+			return !(vector0 == vector1);
 		}
 		/* --------------------------------------------------------------------------- */
 		float getLength(const Vec3 &vector)
@@ -359,6 +376,24 @@ namespace blitz
 		const Mat44 operator /(const Mat44 &matrix, float number)
 		{
 			return (1.0f / number) * matrix;
+		}
+		Bool operator ==(const Mat44 &matrix0, const Mat44 &matrix1)
+		{
+			for (Int32 i = 0; i < 4; ++i)
+			{
+				for (Int32 j = 0; j < 4; ++j)
+				{
+					if (matrix0.e[i][j] != matrix1.e[i][j])
+					{
+						return 0;
+					}
+				}
+			}
+			return 1;
+		}
+		Bool operator !=(const Mat44 &matrix0, const Mat44 &matrix1)
+		{
+			return !(matrix0 == matrix1);
 		}
 		/* --------------------------------------------------------------------------- */
 		void buildEmpty(Mat44 *out_matrix)
