@@ -7,9 +7,6 @@
 namespace
 {
 	GLuint vertexBuffer, indexBuffer;
-	/* ------------------------------------------------------------------------------- */
-	void setVertexFormat();
-	void unsetVertexFormat();
 }
 /* ----------------------------------------------------------------------------------- */
 namespace blitz
@@ -50,35 +47,14 @@ namespace blitz
 					GL_DYNAMIC_DRAW);
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Uint32) * 2,
 					indexList, GL_DYNAMIC_DRAW);
-				setVertexFormat();
+				__setVertexFormat();
 				glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
-				unsetVertexFormat();
+				__unsetVertexFormat();
 			}
 			void setLineWidth(float width)
 			{
 				glLineWidth(width);
 			}
 		}
-	}
-}
-/* ----------------------------------------------------------------------------------- */
-namespace
-{
-	void setVertexFormat()
-	{
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, 0, sizeof(blitz::graphics::Vertex), 0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 4, GL_FLOAT, 0, sizeof(blitz::graphics::Vertex),
-			(void *)(sizeof(blitz::math::Vec3)));
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, 0, sizeof(blitz::graphics::Vertex),
-			(void *)(sizeof(blitz::math::Vec3) + 4 * sizeof(float)));
-	}
-	void unsetVertexFormat()
-	{
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
 	}
 }
