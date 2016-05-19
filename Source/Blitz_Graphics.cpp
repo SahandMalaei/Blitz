@@ -309,6 +309,22 @@ namespace blitz
 		{
 			currentCamera = 0;
 		}
+		void enableAlphaBlending()
+		{
+			glEnable(GL_BLEND);
+			glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+			glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+		}
+		void enableAdditiveBlending()
+		{
+			glEnable(GL_BLEND);
+			glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+			glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ONE);
+		}
+		void disableBlending()
+		{
+			glDisable(GL_BLEND);
+		}
 		/* --------------------------------------------------------------------------- */
 		namespace __core
 		{

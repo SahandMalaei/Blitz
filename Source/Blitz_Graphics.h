@@ -60,6 +60,10 @@ namespace blitz
 
 		void setCamera(Camera *camera);
 		void unsetCamera();
+
+		void enableAlphaBlending();
+		void enableAdditiveBlending();
+		void disableBlending();
 	}
 }
 
