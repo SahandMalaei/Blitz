@@ -450,9 +450,6 @@ namespace
 		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 		glGenBuffers(1, &indexBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-		glFrontFace(GL_CW);
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_GEQUAL);
 		glClearDepthf(-1.0f);
