@@ -60,8 +60,11 @@ namespace blitz
 		}
 		void Camera::setPosition(const math::Vec2 &position)
 		{
-			position_ = position;
-			viewTranslationValid_ = 0;
+			if (position_ != position)
+			{
+				position_ = position;
+				viewTranslationValid_ = 0;
+			}
 		}
 		float Camera::getAngle() const
 		{
@@ -69,8 +72,11 @@ namespace blitz
 		}
 		void Camera::setAngle(float angle)
 		{
-			angle_ = angle;
-			viewRotationValid_ = 0;
+			if (angle_ != angle)
+			{
+				angle_ = angle;
+				viewRotationValid_ = 0;
+			}
 		}
 		math::Mat44 Camera::getView() const
 		{
