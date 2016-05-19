@@ -28,6 +28,7 @@ namespace blitz
 		const Vec2 operator +(const Vec2 &vector0, const Vec2 &vector1);
 		const Vec2 operator -(const Vec2 &vector0, const Vec2 &vector1);
 		const Vec2 operator *(const Vec2 &vector0, const Vec2 &vector1);
+		const Vec2 operator *(float number, const Vec2 &vector);
 		const Vec2 operator *(const Vec2 &vector, float number);
 		const Vec2 operator /(const Vec2 &vector0, const Vec2 &vector1);
 		const Vec2 operator /(const Vec2 &vector, float number);
@@ -60,6 +61,7 @@ namespace blitz
 		const Vec3 operator +(const Vec3 &vector0, const Vec3 &vector1);
 		const Vec3 operator -(const Vec3 &vector0, const Vec3 &vector1);
 		const Vec3 operator *(const Vec3 &vector0, const Vec3 &vector1);
+		const Vec3 operator *(float number, const Vec3 &vector);
 		const Vec3 operator *(const Vec3 &vector, float number);
 		const Vec3 operator /(const Vec3 &vector0, const Vec3 &vector1);
 		const Vec3 operator /(const Vec3 &vector, float number);

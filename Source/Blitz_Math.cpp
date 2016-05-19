@@ -85,9 +85,13 @@ namespace blitz
 		{
 			return Vec2(vector0.x * vector1.x, vector0.y * vector1.y);
 		}
-		const Vec2 operator *(const Vec2 &vector, float number)
+		const Vec2 operator *(float number, const Vec2 &vector)
 		{
 			return Vec2(vector.x * number, vector.y * number);
+		}
+		const Vec2 operator *(const Vec2 &vector, float number)
+		{
+			return number * vector;
 		}
 		const Vec2 operator /(const Vec2 &vector0, const Vec2 &vector1)
 		{
@@ -215,9 +219,13 @@ namespace blitz
 			return Vec3(vector0.x * vector1.x, vector0.y * vector1.y,
 				vector0.z * vector1.z);
 		}
-		const Vec3 operator *(const Vec3 &vector, float number)
+		const Vec3 operator *(float number, const Vec3 &vector)
 		{
 			return Vec3(vector.x * number, vector.y * number, vector.z * number);
+		}
+		const Vec3 operator *(const Vec3 &vector, float number)
+		{
+			return number * vector;
 		}
 		const Vec3 operator /(const Vec3 &vector0, const Vec3 &vector1)
 		{
