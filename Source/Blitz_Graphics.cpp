@@ -120,6 +120,13 @@ namespace blitz
 			a(color.a)
 		{
 		}
+		ColorRgba::ColorRgba(const ColorRgb &colorRgb, float a) :
+			r(colorRgb.r),
+			g(colorRgb.g),
+			b(colorRgb.b),
+			a(a)
+		{	
+		}
 		ColorRgba::ColorRgba(float r, float g, float b, float a) :
 			r(r),
 			g(g),

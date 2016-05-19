@@ -24,6 +24,7 @@ namespace blitz
 
 			ColorRgba();
 			ColorRgba(float r, float g, float b, float a);
+			ColorRgba(const ColorRgb &colorRgb, float a);
 			ColorRgba(const ColorRgba &color);
 			ColorRgba & operator =(const ColorRgba &color);
 		};
