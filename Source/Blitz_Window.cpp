@@ -50,6 +50,15 @@ namespace blitz
 	{
 		return (Bool)glfwWindowShouldClose(window->handle);
 	}
+	/* ------------------------------------------------------------------------------- */
+	namespace graphics
+	{
+		void setVsync(Bool state)
+		{
+			glfwSwapInterval(state ? 1 : 0);
+		}
+	}
+	/* ------------------------------------------------------------------------------- */
 	void __swapBuffers()
 	{
 		glfwSwapBuffers(currentWindow->handle);

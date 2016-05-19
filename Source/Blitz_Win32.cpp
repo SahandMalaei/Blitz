@@ -15,15 +15,15 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char *lpCmdL
 	int nCmdShow)
 {
 	glfwInit();
-	blitz::__core::init();
-	GLenum result = glewInit();
-	if (result != GLEW_OK)
+	blitz::Int32 result = blitz::__core::init();
+	if (result != 0)
 	{
 		return 1;
 	}
 	while (!blitz::windowShouldClose(blitz::getCurrentWindow()) && !blitz::isEnded())
 	{
 		blitz::__core::update();
+		blitz::__swapBuffers();
 		glfwPollEvents();
 	}
 	blitz::__core::onEnd();
