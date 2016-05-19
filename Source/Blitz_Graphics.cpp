@@ -69,8 +69,6 @@ namespace
 	blitz::Int32 createShaderProgram(ShaderProgram *out_shaderProgram,
 		Shader *shaderList, blitz::Int32 shaderCount);
 	blitz::Int32 getShaderUniformVariableLocation(const char *identifier);
-	void setVertexFormat();
-	void unsetVertexFormat();
 	/* ------------------------------------------------------------------------------- */
 	blitz::Int32 setInitialRenderStates();
 	blitz::Int32 initDefaultShaders();
@@ -176,9 +174,9 @@ namespace blitz
 				GL_DYNAMIC_DRAW);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indexCount,
 				indexList, GL_DYNAMIC_DRAW);
-			setVertexFormat();
+			__setVertexFormat();
 			glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
-			unsetVertexFormat();
+			__unsetVertexFormat();
 		}
 		Int32 loadTexture(Texture *out_texture, const char *fileAddress)
 		{
@@ -326,6 +324,24 @@ namespace blitz
 			glDisable(GL_BLEND);
 		}
 		/* --------------------------------------------------------------------------- */
+		void __setVertexFormat()
+		{
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, 0, sizeof(blitz::graphics::Vertex), 0);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 4, GL_FLOAT, 0, sizeof(blitz::graphics::Vertex),
+				(void *)(sizeof(blitz::math::Vec3)));
+			glEnableVertexAttribArray(2);
+			glVertexAttribPointer(2, 2, GL_FLOAT, 0, sizeof(blitz::graphics::Vertex),
+				(void *)(sizeof(blitz::math::Vec3) + 4 * sizeof(float)));
+		}
+		void __unsetVertexFormat()
+		{
+			glDisableVertexAttribArray(0);
+			glDisableVertexAttribArray(1);
+			glDisableVertexAttribArray(2);
+		}
+		/* --------------------------------------------------------------------------- */
 		namespace __core
 		{
 			Int32 init()
@@ -412,23 +428,6 @@ namespace
 	blitz::Int32 getShaderUniformVariableLocation(const char *identifier)
 	{
 		return glGetUniformLocation(shaderProgram, identifier);
-	}
-	void setVertexFormat()
-	{
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, 0, sizeof(blitz::graphics::Vertex), 0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 4, GL_FLOAT, 0, sizeof(blitz::graphics::Vertex),
-			(void *)(sizeof(blitz::math::Vec3)));
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, 0, sizeof(blitz::graphics::Vertex),
-			(void *)(sizeof(blitz::math::Vec3) + 4 * sizeof(float)));
-	}
-	void unsetVertexFormat()
-	{
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
 	}
 	/* ------------------------------------------------------------------------------- */
 	blitz::Int32 setInitialRenderStates()

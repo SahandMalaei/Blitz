@@ -64,6 +64,9 @@ namespace blitz
 		void enableAlphaBlending();
 		void enableAdditiveBlending();
 		void disableBlending();
+
+		void __setVertexFormat();
+		void __unsetVertexFormat();
 	}
 }
 
