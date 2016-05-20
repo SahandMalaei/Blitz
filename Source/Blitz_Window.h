@@ -12,6 +12,9 @@ namespace blitz
 	Window *getCurrentWindow();
 	Bool windowShouldClose(Window *window);
 
+	void getWindowPosition(Int32 *out_x, Int32 *out_y, Window *window);
+	void setWindowPosition(Window *window, Int32 x, Int32 y);
+
 	namespace graphics
 	{
 		void setVsync(Bool state);
