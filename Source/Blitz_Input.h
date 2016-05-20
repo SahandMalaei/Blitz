@@ -160,17 +160,11 @@ namespace blitz
 		const Int32 MODIFIER_ALT = 0x0004;
 		const Int32 MODIFIER_SUPER = 0x0008;
 
-		template<typename T> class Point
-		{
-		public:
-			T x, y;
-		};
-
 		typedef void (*KeyboardCallback)(Window *window, Key key, Action action,
 			Int32 modifiers);
 		typedef void (*MouseButtonCallback)(Window *window, MouseButton button,
 			Action action, Int32 modifiers);
-		typedef void (*MouseScrollCallback)(Window *window, const Point<float> &offset);
+		typedef void (*MouseScrollCallback)(Window *window, float offsetX, float offsetY);
 
 		Int32 setKeyboardCallback(Window *window, KeyboardCallback callback);
 		void removeKeyboardCallback(Window *window);
@@ -178,7 +172,7 @@ namespace blitz
 		void removeMouseButtonCallback(Window *window);
 		Int32 setMouseScrollCallback(Window *window, MouseScrollCallback callback);
 		void removeMouseScrollCallback(Window *window);
-		const Point<float> getMousePosition(Window *window);
+		void getMousePosition(Int32 *out_x, Int32 *out_y, Window *window);
 	}
 }
 

@@ -80,14 +80,12 @@ namespace blitz
 				currentMouseScrollCallback = 0;
 			}
 		}
-		const Point<float> getMousePosition(Window *window)
+		void getMousePosition(Int32 *out_x, Int32 *out_y, Window *window)
 		{
 			double x, y;
 			glfwGetCursorPos(window->handle, &x, &y);
-			Point<float> position;
-			position.x = (float)x;
-			position.y = (float)y;
-			return position;
+			*out_x = (Int32)x;
+			*out_y = (Int32)y;
 		}
 	}
 }
@@ -116,10 +114,7 @@ namespace
 	{
 		if (window == currentWindow->handle && currentMouseScrollCallback)
 		{
-			blitz::input::Point<float> offset;
-			offset.x = (float)offsetX;
-			offset.y = (float)offsetY;
-			currentMouseScrollCallback(currentWindow, offset);
+			currentMouseScrollCallback(currentWindow, (float)offsetX, (float)offsetY);
 		}
 	}
 	void resetCallbacks()
