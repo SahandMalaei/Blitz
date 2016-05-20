@@ -1,5 +1,5 @@
 #ifndef BLITZ_INPUT_H
-#define BLITZ_INPUT_H 1
+#define BLITZ_INPUT_H
 
 #include "Blitz_BaseTypes.h"
 #include "Blitz_Window.h"

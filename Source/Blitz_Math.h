@@ -1,5 +1,5 @@
 #ifndef BLITZ_MATH_H
-#define BLITZ_MATH_H 1
+#define BLITZ_MATH_H
 
 #include "Blitz_BaseTypes.h"
 

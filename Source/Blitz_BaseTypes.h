@@ -1,5 +1,5 @@
 #ifndef BLITZ_BASETYPES_H
-#define BLITZ_BASETYPES_H 1
+#define BLITZ_BASETYPES_H
 
 #include <stdint.h>
 

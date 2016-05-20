@@ -1,5 +1,5 @@
 #ifndef BLITZ_WINDOW_H
-#define BLITZ_WINDOW_H 1
+#define BLITZ_WINDOW_H
 
 #include "Blitz_BaseTypes.h"
 

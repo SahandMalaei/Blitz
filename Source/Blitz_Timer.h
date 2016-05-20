@@ -1,5 +1,5 @@
 #ifndef BLITZ_TIMER_H
-#define BLITZ_TIMER_H 1
+#define BLITZ_TIMER_H
 
 #include "Blitz_BaseTypes.h"
 
