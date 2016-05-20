@@ -10,7 +10,6 @@ namespace blitz
 			x(0.0f),
 			y(0.0f)
 		{
-
 		}
 		Vec2::Vec2(const Vec2 &vector) :
 			x(vector.x),
@@ -41,22 +40,16 @@ namespace blitz
 			vector0.y -= vector1.y;
 			return vector0;
 		}
-		Vec2 & operator *=(Vec2 &vector0, const Vec2 &vector1)
-		{
-			vector0.x *= vector1.x;
-			vector0.y *= vector1.y;
-			return vector0;
-		}
 		Vec2 & operator *=(Vec2 &vector, float number)
 		{
 			vector.x *= number;
 			vector.y *= number;
 			return vector;
 		}
-		Vec2 & operator /=(Vec2 &vector0, const Vec2 &vector1)
+		Vec2 & operator *=(Vec2 &vector0, const Vec2 &vector1)
 		{
-			vector0.x /= vector1.x;
-			vector0.y /= vector1.y;
+			vector0.x *= vector1.x;
+			vector0.y *= vector1.y;
 			return vector0;
 		}
 		Vec2 & operator /=(Vec2 &vector, float number)
@@ -64,6 +57,12 @@ namespace blitz
 			vector.x /= number;
 			vector.y /= number;
 			return vector;
+		}
+		Vec2 & operator /=(Vec2 &vector0, const Vec2 &vector1)
+		{
+			vector0.x /= vector1.x;
+			vector0.y /= vector1.y;
+			return vector0;
 		}
 		const Vec2 operator +(const Vec2 &vector)
 		{
@@ -81,21 +80,25 @@ namespace blitz
 		{
 			return Vec2(vector0.x - vector1.x, vector0.y - vector1.y);
 		}
+		const Vec2 operator *(float number, const Vec2 &vector)
+		{
+			return Vec2(vector.x * number, vector.y * number);
+		}
+		const Vec2 operator *(const Vec2 &vector, float number)
+		{
+			return number * vector;
+		}
 		const Vec2 operator *(const Vec2 &vector0, const Vec2 &vector1)
 		{
 			return Vec2(vector0.x * vector1.x, vector0.y * vector1.y);
 		}
-		const Vec2 operator *(const Vec2 &vector, float number)
+		const Vec2 operator /(const Vec2 &vector, float number)
 		{
-			return Vec2(vector.x * number, vector.y * number);
+			return Vec2(vector.x / number, vector.y / number);
 		}
 		const Vec2 operator /(const Vec2 &vector0, const Vec2 &vector1)
 		{
 			return Vec2(vector0.x / vector1.x, vector0.y / vector1.y);
-		}
-		const Vec2 operator /(const Vec2 &vector, float number)
-		{
-			return Vec2(vector.x / number, vector.y / number);
 		}
 		Bool operator ==(const Vec2 &vector0, const Vec2 &vector1)
 		{
@@ -128,7 +131,6 @@ namespace blitz
 			y(0.0f),
 			z(0.0f)
 		{
-
 		}
 		Vec3::Vec3(const Vec3 &vector) :
 			x(vector.x),
@@ -164,13 +166,6 @@ namespace blitz
 			vector0.z -= vector1.z;
 			return vector0;
 		}
-		Vec3 & operator *=(Vec3 &vector0, const Vec3 &vector1)
-		{
-			vector0.x *= vector1.x;
-			vector0.y *= vector1.y;
-			vector0.z *= vector1.z;
-			return vector0;
-		}
 		Vec3 & operator *=(Vec3 &vector, float number)
 		{
 			vector.x *= number;
@@ -178,11 +173,11 @@ namespace blitz
 			vector.z *= number;
 			return vector;
 		}
-		Vec3 & operator /=(Vec3 &vector0, const Vec3 &vector1)
+		Vec3 & operator *=(Vec3 &vector0, const Vec3 &vector1)
 		{
-			vector0.x /= vector1.x;
-			vector0.y /= vector1.y;
-			vector0.z /= vector1.z;
+			vector0.x *= vector1.x;
+			vector0.y *= vector1.y;
+			vector0.z *= vector1.z;
 			return vector0;
 		}
 		Vec3 & operator /=(Vec3 &vector, float number)
@@ -191,6 +186,13 @@ namespace blitz
 			vector.y /= number;
 			vector.z /= number;
 			return vector;
+		}
+		Vec3 & operator /=(Vec3 &vector0, const Vec3 &vector1)
+		{
+			vector0.x /= vector1.x;
+			vector0.y /= vector1.y;
+			vector0.z /= vector1.z;
+			return vector0;
 		}
 		const Vec3 operator +(const Vec3 &vector)
 		{
@@ -210,23 +212,27 @@ namespace blitz
 			return Vec3(vector0.x - vector1.x, vector0.y - vector1.y,
 				vector0.z - vector1.z);
 		}
+		const Vec3 operator *(float number, const Vec3 &vector)
+		{
+			return Vec3(vector.x * number, vector.y * number, vector.z * number);
+		}
+		const Vec3 operator *(const Vec3 &vector, float number)
+		{
+			return number * vector;
+		}
 		const Vec3 operator *(const Vec3 &vector0, const Vec3 &vector1)
 		{
 			return Vec3(vector0.x * vector1.x, vector0.y * vector1.y,
 				vector0.z * vector1.z);
 		}
-		const Vec3 operator *(const Vec3 &vector, float number)
+		const Vec3 operator /(const Vec3 &vector, float number)
 		{
-			return Vec3(vector.x * number, vector.y * number, vector.z * number);
+			return Vec3(vector.x / number, vector.y / number, vector.z / number);
 		}
 		const Vec3 operator /(const Vec3 &vector0, const Vec3 &vector1)
 		{
 			return Vec3(vector0.x / vector1.x, vector0.y / vector1.y,
 				vector0.z / vector1.z);
-		}
-		const Vec3 operator /(const Vec3 &vector, float number)
-		{
-			return Vec3(vector.x / number, vector.y / number, vector.z / number);
 		}
 		Bool operator ==(const Vec3 &vector0, const Vec3 &vector1)
 		{

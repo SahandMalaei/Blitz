@@ -50,6 +50,14 @@ namespace blitz
 	{
 		return (Bool)glfwWindowShouldClose(window->handle);
 	}
+	void getWindowPosition(Int32 *out_x, Int32 *out_y, Window *window)
+	{
+		glfwGetWindowPos(window->handle, out_x, out_y);
+	}
+	void setWindowPosition(Window *window, Int32 x, Int32 y)
+	{
+		glfwSetWindowPos(window->handle, x, y);
+	}
 	/* ------------------------------------------------------------------------------- */
 	namespace graphics
 	{

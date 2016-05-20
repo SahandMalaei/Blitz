@@ -1,5 +1,5 @@
 #include "Blitz_Graphics.h"
-#include "Blitz_Graphics_Core.h"
+#include "Blitz_Graphics_Core__.h"
 /* ----------------------------------------------------------------------------------- */
 #include <map>
 #include <string>
