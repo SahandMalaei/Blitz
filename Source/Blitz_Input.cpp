@@ -219,7 +219,7 @@ namespace blitz
 				currentMouseScrollCallback = 0;
 			}
 		}
-		Point<float> getMousePosition(Window *window)
+		const Point<float> getMousePosition(Window *window)
 		{
 			double x, y;
 			glfwGetCursorPos(window->handle, &x, &y);
