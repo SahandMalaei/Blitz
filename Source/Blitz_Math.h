@@ -7,6 +7,8 @@ namespace blitz
 {
 	namespace math
 	{
+		const float PI = 3.1415926f;
+
 		struct Vec2
 		{
 			float x, y;
