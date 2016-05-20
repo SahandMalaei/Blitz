@@ -8,145 +8,157 @@ namespace blitz
 {
 	namespace input
 	{
-		extern const Int32 KEY_UNKNOWN;
+		enum class Key : Int32
+		{
+			UNKNOWN = -1,
+			SPACE = 32,
+			APOSTROPHE = 39,
+			COMMA = 44,
+			MINUS = 45,
+			PERIOD = 46,
+			SLASH = 47,
+			NUM_0 = 48,
+			NUM_1 = 49,
+			NUM_2 = 50,
+			NUM_3 = 51,
+			NUM_4 = 52,
+			NUM_5 = 53,
+			NUM_6 = 54,
+			NUM_7 = 55,
+			NUM_8 = 56,
+			NUM_9 = 57,
+			SEMICOLON = 59,
+			EQUAL = 61,
+			A = 65,
+			B = 66,
+			C = 67,
+			D = 68,
+			E = 69,
+			F = 70,
+			G = 71,
+			H = 72,
+			I = 73,
+			J = 74,
+			K = 75,
+			L = 76,
+			M = 77,
+			N = 78,
+			O = 79,
+			P = 80,
+			Q = 81,
+			R = 82,
+			S = 83,
+			T = 84,
+			U = 85,
+			V = 86,
+			W = 87,
+			X = 88,
+			Y = 89,
+			Z = 90,
+			LEFT_BRACKET = 91,
+			BACKSLASH = 92,
+			RIGHT_BRACKET = 93,
+			GRAVE_ACCENT = 96,
+			WORLD_1 = 161,
+			WORLD_2 = 162,
+			ESCAPE = 256,
+			ENTER = 257,
+			TAB = 258,
+			BACKSPACE = 259,
+			INSERT = 260,
+			DELETE = 261,
+			RIGHT = 262,
+			LEFT = 263,
+			DOWN = 264,
+			UP = 265,
+			PAGE_UP = 266,
+			PAGE_DOWN = 267,
+			HOME = 268,
+			END = 269,
+			CAPS_LOCK = 280,
+			SCROLL_LOCK = 281,
+			NUM_LOCK = 282,
+			PRINT_SCREEN = 283,
+			PAUSE = 284,
+			F1 = 290,
+			F2 = 291,
+			F3 = 292,
+			F4 = 293,
+			F5 = 294,
+			F6 = 295,
+			F7 = 296,
+			F8 = 297,
+			F9 = 298,
+			F10 = 299,
+			F11 = 300,
+			F12 = 301,
+			F13 = 302,
+			F14 = 303,
+			F15 = 304,
+			F16 = 305,
+			F17 = 306,
+			F18 = 307,
+			F19 = 308,
+			F20 = 309,
+			F21 = 310,
+			F22 = 311,
+			F23 = 312,
+			F24 = 313,
+			F25 = 314,
+			KP_0 = 320,
+			KP_1 = 321,
+			KP_2 = 322,
+			KP_3 = 323,
+			KP_4 = 324,
+			KP_5 = 325,
+			KP_6 = 326,
+			KP_7 = 327,
+			KP_8 = 328,
+			KP_9 = 329,
+			KP_DECIMAL = 330,
+			KP_DIVIDE = 331,
+			KP_MULTIPLY = 332,
+			KP_SUBTRACT = 333,
+			KP_ADD = 334,
+			KP_ENTER = 335,
+			KP_EQUAL = 336,
+			LEFT_SHIFT = 340,
+			LEFT_CONTROL = 341,
+			LEFT_ALT = 342,
+			LEFT_SUPER = 343,
+			RIGHT_SHIFT = 344,
+			RIGHT_CONTROL = 345,
+			RIGHT_ALT = 346,
+			RIGHT_SUPER = 347,
+			MENU = 348
+		};
 
-		extern const Int32 KEY_SPACE;
-		extern const Int32 KEY_APOSTROPHE;
-		extern const Int32 KEY_COMMA;
-		extern const Int32 KEY_MINUS;
-		extern const Int32 KEY_PERIOD;
-		extern const Int32 KEY_SLASH;
-		extern const Int32 KEY_0;
-		extern const Int32 KEY_1;
-		extern const Int32 KEY_2;
-		extern const Int32 KEY_3;
-		extern const Int32 KEY_4;
-		extern const Int32 KEY_5;
-		extern const Int32 KEY_6;
-		extern const Int32 KEY_7;
-		extern const Int32 KEY_8;
-		extern const Int32 KEY_9;
-		extern const Int32 KEY_SEMICOLON;
-		extern const Int32 KEY_EQUAL;
-		extern const Int32 KEY_A;
-		extern const Int32 KEY_B;
-		extern const Int32 KEY_C;
-		extern const Int32 KEY_D;
-		extern const Int32 KEY_E;
-		extern const Int32 KEY_F;
-		extern const Int32 KEY_G;
-		extern const Int32 KEY_H;
-		extern const Int32 KEY_I;
-		extern const Int32 KEY_J;
-		extern const Int32 KEY_K;
-		extern const Int32 KEY_L;
-		extern const Int32 KEY_M;
-		extern const Int32 KEY_N;
-		extern const Int32 KEY_O;
-		extern const Int32 KEY_P;
-		extern const Int32 KEY_Q;
-		extern const Int32 KEY_R;
-		extern const Int32 KEY_S;
-		extern const Int32 KEY_T;
-		extern const Int32 KEY_U;
-		extern const Int32 KEY_V;
-		extern const Int32 KEY_W;
-		extern const Int32 KEY_X;
-		extern const Int32 KEY_Y;
-		extern const Int32 KEY_Z;
-		extern const Int32 KEY_LEFT_BRACKET;
-		extern const Int32 KEY_BACKSLASH;
-		extern const Int32 KEY_RIGHT_BRACKET;
-		extern const Int32 KEY_GRAVE_ACCENT;
-		extern const Int32 KEY_WORLD_1;
-		extern const Int32 KEY_WORLD_2;
-		extern const Int32 KEY_ESCAPE;
-		extern const Int32 KEY_ENTER;
-		extern const Int32 KEY_TAB;
-		extern const Int32 KEY_BACKSPACE;
-		extern const Int32 KEY_INSERT;
-		extern const Int32 KEY_DELETE;
-		extern const Int32 KEY_RIGHT;
-		extern const Int32 KEY_LEFT;
-		extern const Int32 KEY_DOWN;
-		extern const Int32 KEY_UP;
-		extern const Int32 KEY_PAGE_UP;
-		extern const Int32 KEY_PAGE_DOWN;
-		extern const Int32 KEY_HOME;
-		extern const Int32 KEY_END;
-		extern const Int32 KEY_CAPS_LOCK;
-		extern const Int32 KEY_SCROLL_LOCK;
-		extern const Int32 KEY_NUM_LOCK;
-		extern const Int32 KEY_PRINT_SCREEN;
-		extern const Int32 KEY_PAUSE;
-		extern const Int32 KEY_F1;
-		extern const Int32 KEY_F2;
-		extern const Int32 KEY_F3;
-		extern const Int32 KEY_F4;
-		extern const Int32 KEY_F5;
-		extern const Int32 KEY_F6;
-		extern const Int32 KEY_F7;
-		extern const Int32 KEY_F8;
-		extern const Int32 KEY_F9;
-		extern const Int32 KEY_F10;
-		extern const Int32 KEY_F11;
-		extern const Int32 KEY_F12;
-		extern const Int32 KEY_F13;
-		extern const Int32 KEY_F14;
-		extern const Int32 KEY_F15;
-		extern const Int32 KEY_F16;
-		extern const Int32 KEY_F17;
-		extern const Int32 KEY_F18;
-		extern const Int32 KEY_F19;
-		extern const Int32 KEY_F20;
-		extern const Int32 KEY_F21;
-		extern const Int32 KEY_F22;
-		extern const Int32 KEY_F23;
-		extern const Int32 KEY_F24;
-		extern const Int32 KEY_F25;
-		extern const Int32 KEY_KP_0;
-		extern const Int32 KEY_KP_1;
-		extern const Int32 KEY_KP_2;
-		extern const Int32 KEY_KP_3;
-		extern const Int32 KEY_KP_4;
-		extern const Int32 KEY_KP_5;
-		extern const Int32 KEY_KP_6;
-		extern const Int32 KEY_KP_7;
-		extern const Int32 KEY_KP_8;
-		extern const Int32 KEY_KP_9;
-		extern const Int32 KEY_KP_DECIMAL;
-		extern const Int32 KEY_KP_DIVIDE;
-		extern const Int32 KEY_KP_MULTIPLY;
-		extern const Int32 KEY_KP_SUBTRACT;
-		extern const Int32 KEY_KP_ADD;
-		extern const Int32 KEY_KP_ENTER;
-		extern const Int32 KEY_KP_EQUAL;
-		extern const Int32 KEY_LEFT_SHIFT;
-		extern const Int32 KEY_LEFT_CONTROL;
-		extern const Int32 KEY_LEFT_ALT;
-		extern const Int32 KEY_LEFT_SUPER;
-		extern const Int32 KEY_RIGHT_SHIFT;
-		extern const Int32 KEY_RIGHT_CONTROL;
-		extern const Int32 KEY_RIGHT_ALT;
-		extern const Int32 KEY_RIGHT_SUPER;
-		extern const Int32 KEY_MENU;
+		enum class MouseButton : Int32
+		{
+			BUTTON_1 = 0,
+			BUTTON_2 = 1,
+			BUTTON_3 = 2,
+			BUTTON_4 = 3,
+			BUTTON_5 = 4,
+			BUTTON_6 = 5,
+			BUTTON_7 = 6,
+			BUTTON_8 = 7,
+			LEFT = BUTTON_1,
+			RIGHT = BUTTON_2,
+			MIDDLE = BUTTON_3
+		};
 
-		extern const Int32 MODIFIER_SHIFT;
-		extern const Int32 MODIFIER_CONTROL;
-		extern const Int32 MODIFIER_ALT;
-		extern const Int32 MODIFIER_SUPER;
+		enum class Action : Int32
+		{
+			PRESS = 1,
+			RELEASE = 0,
+			REPEAT = 2
+		};
 
-		extern const Int32 MOUSE_BUTTON_1;
-		extern const Int32 MOUSE_BUTTON_2;
-		extern const Int32 MOUSE_BUTTON_3;
-		extern const Int32 MOUSE_BUTTON_4;
-		extern const Int32 MOUSE_BUTTON_5;
-		extern const Int32 MOUSE_BUTTON_6;
-		extern const Int32 MOUSE_BUTTON_7;
-		extern const Int32 MOUSE_BUTTON_8;
-		extern const Int32 MOUSE_BUTTON_LEFT;
-		extern const Int32 MOUSE_BUTTON_RIGHT;
-		extern const Int32 MOUSE_BUTTON_MIDDLE;
+		const Int32 MODIFIER_SHIFT = 0x0001;
+		const Int32 MODIFIER_CONTROL = 0x0002;
+		const Int32 MODIFIER_ALT = 0x0004;
+		const Int32 MODIFIER_SUPER = 0x0008;
 
 		template<typename T> class Point
 		{
@@ -154,10 +166,10 @@ namespace blitz
 			T x, y;
 		};
 
-		typedef void (*KeyboardCallback)(Window *window, Int32 key, Int32 action,
+		typedef void (*KeyboardCallback)(Window *window, Key key, Action action,
 			Int32 modifiers);
-		typedef void (*MouseButtonCallback)(Window *window, Int32 button, Int32 action,
-			Int32 modifiers);
+		typedef void (*MouseButtonCallback)(Window *window, MouseButton button,
+			Action action, Int32 modifiers);
 		typedef void (*MouseScrollCallback)(Window *window, const Point<float> &offset);
 
 		Int32 setKeyboardCallback(Window *window, KeyboardCallback callback);
