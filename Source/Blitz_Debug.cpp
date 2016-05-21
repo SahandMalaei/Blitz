@@ -9,6 +9,7 @@ namespace
 	std::string logFileAddress;
 	std::list<std::string> messageList;
 }
+/* ------------------------------------------------------------------------------------ */
 namespace blitz
 {
 	namespace __debug
@@ -62,7 +63,8 @@ namespace blitz
 			asctime_s(timeStringBuffer, &currentTime);
 			std::string timeString = "Time : " + std::string(timeStringBuffer);
 			file.write(timeString.c_str(), timeString.length() - 1);
-			for (auto listIterator = messageList.begin(); listIterator != messageList.end(); ++listIterator)
+			for (auto listIterator = messageList.begin();
+				listIterator != messageList.end(); ++listIterator)
 			{
 				file.write("\n", 1);
 				file.write(listIterator->c_str(), listIterator->length());

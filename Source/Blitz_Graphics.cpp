@@ -1,26 +1,26 @@
 #include "Blitz_Graphics.h"
 #include "Blitz_Graphics_Core__.h"
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 #include <map>
 #include <string>
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 #include "GL/glew.h"
 #include "FreeImage/FreeImage.h"
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 #include "Blitz_Debug__.h"
 #include "Blitz_Graphics_Camera.h"
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 namespace
 {
 	typedef blitz::Uint32 Shader, ShaderProgram;
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	ShaderProgram shaderProgram;
 	GLuint vertexBuffer, indexBuffer;
 	std::map<std::string, blitz::graphics::Texture> textureList;
 	blitz::Int32 objectTransformLocation, viewTransformLocation,
 		projectionTransformLocation, textureSamplerLocation, useTextureLocation;
 	blitz::graphics::Camera *currentCamera = 0;
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	const char * const DEFAULT_VERTEX_SHADER_SOURCE =
 		"#version 140\n\
 		\n\
@@ -40,7 +40,7 @@ namespace
 			fragmentColor = color;\n\
 			fragmentTextureCoordinates = textureCoordinates;\n\
 		}";
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	const char * const DEFAULT_FRAGMENT_SHADER_SOURCE =
 		"#version 140\n\
 		\n\
@@ -64,19 +64,19 @@ namespace
 				color = fragmentColor;\n\
 			}\n\
 		}";
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	blitz::Int32 createShader(Shader *out_shader, const char *source,
 		blitz::Uint32 glShaderType);
 	blitz::Int32 createShaderProgram(ShaderProgram *out_shaderProgram,
 		Shader *shaderList, blitz::Int32 shaderCount);
 	blitz::Int32 getShaderUniformVariableLocation(const char *identifier);
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	blitz::Int32 setInitialRenderStates();
 	blitz::Int32 initDefaultShaders();
 	blitz::Int32 initDefaultShadersUniformVariables();
 	void updateDefaultShadersUniformVariables();
 }
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 namespace blitz
 {
 	namespace graphics
@@ -106,7 +106,7 @@ namespace blitz
 			b = color.b;
 			return *this;
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		ColorRgba::ColorRgba() :
 			r(0.0f),
 			g(0.0f),
@@ -143,7 +143,7 @@ namespace blitz
 			a = color.a;
 			return *this;
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		Vertex::Vertex()
 		{
 		}
@@ -167,7 +167,7 @@ namespace blitz
 			textureCoordinates = vertex.textureCoordinates;
 			return *this;
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		void clear(const ColorRgba &color)
 		{
 			glClearColor(color.r, color.g, color.b, color.a);
@@ -360,7 +360,7 @@ namespace blitz
 		{
 			glDisable(GL_BLEND);
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		void __setVertexFormat()
 		{
 			glEnableVertexAttribArray(0);
@@ -378,7 +378,7 @@ namespace blitz
 			glDisableVertexAttribArray(1);
 			glDisableVertexAttribArray(2);
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		namespace __core
 		{
 			Int32 init()
@@ -419,7 +419,7 @@ namespace blitz
 		}
 	}
 }
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 namespace
 {
 	blitz::Int32 createShader(Shader *out_shader, const char *source,
@@ -486,7 +486,7 @@ namespace
 	{
 		return glGetUniformLocation(shaderProgram, identifier);
 	}
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	blitz::Int32 setInitialRenderStates()
 	{
 		GLenum result = glewInit();
