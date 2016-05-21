@@ -7,6 +7,7 @@
 #include "GL/glew.h"
 #include "FreeImage/FreeImage.h"
 /* ----------------------------------------------------------------------------------- */
+#include "Blitz_Debug__.h"
 #include "Blitz_Graphics_Camera.h"
 /* ----------------------------------------------------------------------------------- */
 namespace
@@ -175,6 +176,10 @@ namespace blitz
 		void draw(Vertex *vertexList, Int32 vertexCount,
 			Uint32 *indexList, Int32 indexCount)
 		{
+			__BLITZ_ASSERT(vertexList);
+			__BLITZ_ASSERT(vertexCount);
+			__BLITZ_ASSERT(indexList);
+			__BLITZ_ASSERT(indexCount);
 			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexCount, vertexList,
@@ -187,6 +192,8 @@ namespace blitz
 		}
 		Int32 loadTexture(Texture *out_texture, const char *fileAddress)
 		{
+			__BLITZ_ASSERT(out_texture);
+			__BLITZ_ASSERT(fileAddress);
 			auto existingTexture = textureList.find(std::string(fileAddress));
 			if (existingTexture != textureList.end())
 			{
@@ -201,6 +208,8 @@ namespace blitz
 			}
 			if (freeImageFormat == FIF_UNKNOWN)
 			{
+				__BLITZ_THROW_ERROR("Failed to load image \"" +
+					std::string(fileAddress) + "\" : Image format is not supported.");
 				return 1;
 			}
 			Bool loadAlphaChannel = 0;
@@ -219,22 +228,31 @@ namespace blitz
 			}
 			if (FreeImage_FIFSupportsReading(freeImageFormat) == 0)
 			{
+				__BLITZ_THROW_ERROR("Failed to load image \"" +
+					std::string(fileAddress) +
+					"\" : Reading from this image format is not supported.");
 				return 1;
 			}
 			FIBITMAP *freeImageBitmap = FreeImage_Load(freeImageFormat, fileAddress, 0);
 			if (freeImageBitmap == 0)
 			{
+				__BLITZ_THROW_ERROR("Failed to load image \"" +
+					std::string(fileAddress) + "\" : Failed to load image file.");
 				return 1;
 			}
 			BYTE *imageData = FreeImage_GetBits(freeImageBitmap);
 			if (imageData == 0)
 			{
+				__BLITZ_THROW_ERROR("Failed to load image \"" +
+					std::string(fileAddress) + "\" : Failed to get image data.");
 				return 1;
 			}
 			Int32 imageWidth = FreeImage_GetWidth(freeImageBitmap),
 				imageHeight = FreeImage_GetHeight(freeImageBitmap);
 			if (imageWidth <= 0 || imageHeight <= 0)
 			{
+				__BLITZ_THROW_ERROR("Failed to load image \"" +
+					std::string(fileAddress) + "\" : Image dimensions are invalid.");
 				return 1;
 			}
 			glGenTextures(1, out_texture);
@@ -251,6 +269,8 @@ namespace blitz
 			std::pair<std::string, Texture> newPair =
 				std::pair<std::string, Texture>(fileAddress, *out_texture);
 			textureList.insert(newPair);
+			blitz::__debug::throwMessage("Image \"" + std::string(fileAddress) +
+				"\" loaded.");
 			return 0;
 		}
 		void unloadTexture(Texture texture)
@@ -266,10 +286,7 @@ namespace blitz
 					break;
 				}
 			}
-			if (!textureExists)
-			{
-				return;
-			}
+			__BLITZ_ASSERT(textureExists);
 			glDeleteTextures(1, &texture);
 		}
 		void setTexture(Texture texture)
@@ -356,18 +373,23 @@ namespace blitz
 				Int32 result = setInitialRenderStates();
 				if (result != 0)
 				{
+					__BLITZ_THROW_ERROR("Failed to set the initial render states.");
 					return 1;
 				}
 				result = initDefaultShaders();
 				if (result != 0)
 				{
+					__BLITZ_THROW_ERROR("Failed to initialize the default shaders.");
 					return 1;
 				}
 				result = initDefaultShadersUniformVariables();
 				if (result != 0)
 				{
+					__BLITZ_THROW_ERROR(
+						"Failed to initialize the default shaders' uniform variables.");
 					return 1;
 				}
+				blitz::__debug::throwMessage("Graphics system initialized.");
 				return 0;
 			}
 			void beginRender()
@@ -393,6 +415,7 @@ namespace
 		Shader shader = glCreateShader(glShaderType);
 		if (shader == 0)
 		{
+			__BLITZ_THROW_ERROR("Failed to create shader.");
 			return 1;
 		}
 		GLint sourceLength = strlen(source);
@@ -402,6 +425,10 @@ namespace
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
 		if (success == 0)
 		{
+			const int COMPILE_INFO_LOG_SIZE = 512;
+			GLchar infoLog[COMPILE_INFO_LOG_SIZE];
+			glGetShaderInfoLog(shader, COMPILE_INFO_LOG_SIZE, 0, infoLog);
+			__BLITZ_THROW_ERROR("Shader compilation failed : " + std::string(infoLog));
 			return 1;
 		}
 		*out_shader = shader;
@@ -420,6 +447,11 @@ namespace
 		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
 		if (success == 0)
 		{
+			const int LINK_INFO_LOG_SIZE = 512;
+			char infoLog[LINK_INFO_LOG_SIZE];
+			glGetProgramInfoLog(shaderProgram, LINK_INFO_LOG_SIZE, 0, infoLog);
+			__BLITZ_THROW_ERROR("Shader program linking failed : " +
+				std::string(infoLog));
 			return 1;
 		}
 		glValidateProgram(shaderProgram);
@@ -427,6 +459,11 @@ namespace
 		glGetProgramiv(shaderProgram, GL_VALIDATE_STATUS, &success);
 		if (success == 0)
 		{
+			const int VALIDATE_INFO_LOG_SIZE = 512;
+			GLchar infoLog[VALIDATE_INFO_LOG_SIZE];
+			glGetProgramInfoLog(shaderProgram, VALIDATE_INFO_LOG_SIZE, 0, infoLog);
+			__BLITZ_THROW_ERROR("Shader program validation failed : " +
+				std::string(infoLog));
 			return 1;
 		}
 		*out_shaderProgram = shaderProgram;
@@ -442,6 +479,7 @@ namespace
 		GLenum result = glewInit();
 		if (result != GLEW_OK)
 		{
+			__BLITZ_THROW_ERROR("Failed to initialize GLEW.");
 			return 1;
 		}
 		glGenBuffers(1, &vertexBuffer);
@@ -460,17 +498,20 @@ namespace
 			GL_VERTEX_SHADER);
 		if (result != 0)
 		{
+			__BLITZ_THROW_ERROR("Failed to create the default vertex shader.");
 			return 1;
 		}
 		result = createShader(&shaderList[1], DEFAULT_FRAGMENT_SHADER_SOURCE,
 			GL_FRAGMENT_SHADER);
 		if (result != 0)
 		{
+			__BLITZ_THROW_ERROR("Failed to create the default fragment shader.");
 			return 1;
 		}
 		result = createShaderProgram(&shaderProgram, shaderList, 2);
 		if (result != 0)
 		{
+			__BLITZ_THROW_ERROR("Failed to create the default shader program.");
 			return 1;
 		}
 		glUseProgram(shaderProgram);

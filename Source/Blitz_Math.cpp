@@ -2,6 +2,8 @@
 /* ----------------------------------------------------------------------------------- */
 #include <math.h>
 /* ----------------------------------------------------------------------------------- */
+#include "Blitz_Debug__.h"
+/* ----------------------------------------------------------------------------------- */
 namespace blitz
 {
 	namespace math
@@ -115,6 +117,7 @@ namespace blitz
 		}
 		const Vec2 getNormal(const Vec2 &vector)
 		{
+			__BLITZ_ASSERT(getLength(vector) != 0);
 			return vector / getLength(vector);
 		}
 		float getDotProduct(const Vec2 &vector0, const Vec2 &vector1)
@@ -251,6 +254,7 @@ namespace blitz
 		}
 		const Vec3 getNormal(const Vec3 &vector)
 		{
+			__BLITZ_ASSERT(getLength(vector) != 0);
 			return vector / getLength(vector);
 		}
 		float getDotProduct(const Vec3 &vector0, const Vec3 &vector1)
@@ -404,6 +408,7 @@ namespace blitz
 		/* --------------------------------------------------------------------------- */
 		void buildEmpty(Mat44 *out_matrix)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			for (Int32 i = 0; i < 4; ++i)
 			{
 				for (Int32 j = 0; j < 4; ++j)
@@ -414,6 +419,7 @@ namespace blitz
 		}
 		void buildIdentity(Mat44 *out_matrix)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			buildEmpty(out_matrix);
 			for (Int32 i = 0; i < 4; ++i)
 			{
@@ -422,18 +428,21 @@ namespace blitz
 		}
 		void buildTranslation(Mat44 *out_matrix, const Vec2 &translation)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			buildIdentity(out_matrix);
 			out_matrix->e[0][3] = translation.x;
 			out_matrix->e[1][3] = translation.y;
 		}
 		void buildScaling(Mat44 *out_matrix, const Vec2 &scale)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			buildIdentity(out_matrix);
 			out_matrix->e[0][0] = scale.x;
 			out_matrix->e[1][1] = scale.y;
 		}
 		void buildRotation(Mat44 *out_matrix, const Vec2 &center, float angle)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			buildIdentity(out_matrix);
 			out_matrix->e[0][0] = cosf(angle);
 			out_matrix->e[0][1] = -sinf(angle);
@@ -447,6 +456,7 @@ namespace blitz
 		void buildOrthographicProjection(Mat44 *out_matrix, float left, float right,
 			float bottom, float top, float near, float far)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			buildEmpty(out_matrix);
 			out_matrix->e[0][0] = 2.0f / (right - left);
 			out_matrix->e[0][3] = -((right + left) / (right - left));
