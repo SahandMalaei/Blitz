@@ -190,6 +190,19 @@ namespace blitz
 			glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
 			__unsetVertexFormat();
 		}
+		Bool isTextureLoaded(const char *fileAddress)
+		{
+			__BLITZ_ASSERT(fileAddress);
+			for (auto listIterator = textureList.begin();
+				listIterator != textureList.end(); ++listIterator)
+			{
+				if (listIterator->first == fileAddress)
+				{
+					return 1;
+				}
+			}
+			return 0;
+		}
 		Int32 loadTexture(Texture *out_texture, const char *fileAddress)
 		{
 			__BLITZ_ASSERT(out_texture);
