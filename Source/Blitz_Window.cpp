@@ -58,6 +58,10 @@ namespace blitz
 	{
 		glfwSetWindowPos(window->handle, x, y);
 	}
+	void setWindowTitle(Window *window, const char *title)
+	{
+		glfwSetWindowTitle(window->handle, title);
+	}
 	/* ------------------------------------------------------------------------------- */
 	namespace graphics
 	{

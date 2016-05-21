@@ -15,6 +15,8 @@ namespace blitz
 	void getWindowPosition(Int32 *out_x, Int32 *out_y, Window *window);
 	void setWindowPosition(Window *window, Int32 x, Int32 y);
 
+	void setWindowTitle(Window *window, const char *title);
+
 	namespace graphics
 	{
 		void setVsync(Bool state);
