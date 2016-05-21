@@ -30,7 +30,7 @@ namespace blitz
 		{
 			std::string errorMessage = "	Error : " + message;
 			messageList.push_back(errorMessage);
-			flushLog();
+			flush();
 			exit(1);
 		}
 		void clearLogFile()
@@ -43,7 +43,7 @@ namespace blitz
 			}
 			file.close();
 		}
-		void flushLog()
+		void flush()
 		{
 			std::fstream file;
 			file.open(logFileAddress, std::ios::out | std::ios::app | std::ios::ate);

@@ -12,7 +12,7 @@ namespace blitz
 		void throwMessage(const std::string &message);
 		void throwError(const std::string &message);
 		void clearLogFile();
-		void flushLog();
+		void flush();
 	}
 }
 
