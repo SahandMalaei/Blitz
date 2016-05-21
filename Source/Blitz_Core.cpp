@@ -27,13 +27,13 @@ namespace blitz
 			Int32 result = app::init();
 			if (result != 0)
 			{
-				__BLITZ_DEBUG_THROW_ERROR("App initialization failed.");
+				__BLITZ_THROW_ERROR("App initialization failed.");
 				return 1;
 			}
 			result = graphics::__core::init();
 			if (result != 0)
 			{
-				__BLITZ_DEBUG_THROW_ERROR("Graphics initialization failed.");
+				__BLITZ_THROW_ERROR("Graphics initialization failed.");
 				return 1;
 			}
 			blitz::__debug::throwMessage("Core initialized.");

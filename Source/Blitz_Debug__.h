@@ -17,18 +17,18 @@ namespace blitz
 }
 
 #if ((defined _DEBUG) && (!defined _NDEBUG))
-	#define ASSERT(expression) (void)(expression || \
-		(debug::throwError("Assertion failed : \"" + std::string(#expression) + \
+	#define __BLITZ_ASSERT(expression) (void)(expression || \
+		(__debug::throwError("Assertion failed : \"" + std::string(#expression) + \
 		"\", file \"" + std::string(__FILE__) + "\", line " + \
 		std::to_string(unsigned int(__LINE__))), 0))
 #else
-	#define BLITZ_ASSERT(expression)
+	#define __BLITZ_ASSERT(expression)
 #endif
 
-#define __BLITZ_DEBUG_THROW_ERROR(message) (void)(__debug::throwError( \
+#define __BLITZ_THROW_ERROR(message) (void)(blitz::__debug::throwError( \
 	std::string(message) + " (File : \"" + std::string(__FILE__) + "\", line " + \
 		std::to_string(unsigned int(__LINE__)) + ")"))
-#define __BLITZ_DEBUG_THROW_MESSAGE(message) (void)(__debug::throwMessage( \
+#define __BLITZ_THROW_MESSAGE(message) (void)(blitz::__debug::throwMessage( \
 	std::string(message) + " (File : \"" + std::string(__FILE__) + "\", line " + \
 	std::to_string(unsigned int(__LINE__)) + ")"))
 
