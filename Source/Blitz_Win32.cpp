@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 /* ----------------------------------------------------------------------------------- */
+#include "Blitz_Debug__.h"
 #include "Blitz_BaseTypes.h"
 #include "Blitz_Core.h"
 #include "Blitz_Window.h"
@@ -18,6 +19,7 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char *lpCmdL
 	blitz::Int32 result = blitz::__core::init();
 	if (result != 0)
 	{
+		__BLITZ_THROW_ERROR("Core initialization failed.");
 		return 1;
 	}
 	while (!blitz::windowShouldClose(blitz::getCurrentWindow()) && !blitz::isEnded())
