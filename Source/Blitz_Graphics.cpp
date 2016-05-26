@@ -500,8 +500,7 @@ namespace
 		glGenBuffers(1, &indexBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_GEQUAL);
-		glClearDepthf(-1.0f);
+		glDepthFunc(GL_LEQUAL);
 		return 0;
 	}
 	blitz::Int32 initDefaultShaders()
