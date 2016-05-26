@@ -94,7 +94,7 @@ namespace blitz
 			out_font->verticalOffsetList_ = new Int32[CHARACTER_COUNT];
 			out_font->horizontalAdvanceList_ = new Int32[CHARACTER_COUNT];
 			out_font->textureList_ = new Texture[CHARACTER_COUNT];
-			for (Int32 i = 0; i < 128; ++i)
+			for (Int32 i = 0; i < CHARACTER_COUNT; ++i)
 			{
 				result = FT_Load_Char(fontFace, i, FT_LOAD_RENDER);
 				if (result != 0)
