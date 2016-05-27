@@ -1,8 +1,8 @@
-#include "Blitz_Core.h"
+#include "../Include/Blitz_Core.h"
 /* ------------------------------------------------------------------------------------ */
-#include "Blitz_Debug__.h"
-#include "Blitz_Time.h"
-#include "Blitz_Graphics_Core__.h"
+#include "Blitz_Debug.h"
+#include "../Include/Blitz_Time.h"
+#include "Blitz_Graphics_Core.h"
 /* ------------------------------------------------------------------------------------ */
 namespace
 {

@@ -1,4 +1,4 @@
-#include "Blitz_Graphics_Helper.h"
+#include "../Include/Blitz_Graphics_Helper.h"
 /* ------------------------------------------------------------------------------------ */
 namespace blitz
 {

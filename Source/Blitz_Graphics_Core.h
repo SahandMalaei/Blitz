@@ -1,7 +1,7 @@
 #ifndef BLITZ_GRAPHICS_CORE_H
 #define BLITZ_GRAPHICS_CORE_H
 
-#include "Blitz_BaseTypes.h"
+#include "../Include/Blitz_BaseTypes.h"
 
 namespace blitz
 {

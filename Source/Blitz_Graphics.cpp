@@ -1,5 +1,5 @@
-#include "Blitz_Graphics.h"
-#include "Blitz_Graphics_Core__.h"
+#include "../Include/Blitz_Graphics.h"
+#include "Blitz_Graphics_Core.h"
 /* ------------------------------------------------------------------------------------ */
 #include <map>
 #include <string>
@@ -7,8 +7,8 @@
 #include "GL/glew.h"
 #include "FreeImage/FreeImage.h"
 /* ------------------------------------------------------------------------------------ */
-#include "Blitz_Debug__.h"
-#include "Blitz_Graphics_Camera.h"
+#include "Blitz_Debug.h"
+#include "../Include/Blitz_Graphics_Camera.h"
 /* ------------------------------------------------------------------------------------ */
 namespace
 {

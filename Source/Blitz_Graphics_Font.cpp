@@ -1,11 +1,11 @@
-#include "Blitz_Graphics_Font.h"
+#include "../Include/Blitz_Graphics_Font.h"
 /* ------------------------------------------------------------------------------------ */
 #include "ft2build.h"
 #include FT_FREETYPE_H
 #include "GL/glew.h"
 /* ------------------------------------------------------------------------------------ */
-#include "Blitz_Debug__.h"
-#include "Blitz_Graphics.h"
+#include "Blitz_Debug.h"
+#include "../Include/Blitz_BaseTypes.h"
 /* ------------------------------------------------------------------------------------ */
 namespace
 {
