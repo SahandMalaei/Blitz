@@ -48,6 +48,7 @@ namespace blitz
 
 		typedef Uint32 Texture;
 
+		Bool isTextureLoaded(const char *fileAddress);
 		Int32 loadTexture(Texture *out_texture, const char *fileAddress);
 		void unloadTexture(Texture texture);
 		void setTexture(Texture texture);

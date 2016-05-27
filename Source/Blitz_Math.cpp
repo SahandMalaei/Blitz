@@ -1,7 +1,9 @@
-#include "Blitz_Math.h"
-/* ----------------------------------------------------------------------------------- */
+#include "../Include/Blitz_Math.h"
+/* ------------------------------------------------------------------------------------ */
 #include <math.h>
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
+#include "Blitz_Debug.h"
+/* ------------------------------------------------------------------------------------ */
 namespace blitz
 {
 	namespace math
@@ -27,7 +29,7 @@ namespace blitz
 			y = vector.y;
 			return *this;
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		Vec2 & operator +=(Vec2 &vector0, const Vec2 &vector1)
 		{
 			vector0.x += vector1.x;
@@ -108,13 +110,14 @@ namespace blitz
 		{
 			return !(vector0 == vector1);
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		float getLength(const Vec2 &vector)
 		{
 			return sqrtf(vector.x * vector.x + vector.y * vector.y);
 		}
 		const Vec2 getNormal(const Vec2 &vector)
 		{
+			__BLITZ_ASSERT(getLength(vector) != 0);
 			return vector / getLength(vector);
 		}
 		float getDotProduct(const Vec2 &vector0, const Vec2 &vector1)
@@ -125,7 +128,7 @@ namespace blitz
 		{
 			return getLength(Vec2(position1 - position0));
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		Vec3::Vec3() :
 			x(0.0f),
 			y(0.0f),
@@ -151,7 +154,7 @@ namespace blitz
 			z = vector.z;
 			return *this;
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		Vec3 & operator +=(Vec3 &vector0, const Vec3 &vector1)
 		{
 			vector0.x += vector1.x;
@@ -243,7 +246,7 @@ namespace blitz
 		{
 			return !(vector0 == vector1);
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		float getLength(const Vec3 &vector)
 		{
 			return sqrtf(vector.x * vector.x + vector.y * vector.y +
@@ -251,6 +254,7 @@ namespace blitz
 		}
 		const Vec3 getNormal(const Vec3 &vector)
 		{
+			__BLITZ_ASSERT(getLength(vector) != 0);
 			return vector / getLength(vector);
 		}
 		float getDotProduct(const Vec3 &vector0, const Vec3 &vector1)
@@ -268,7 +272,7 @@ namespace blitz
 		{
 			return getLength(Vec3(position1 - position0));
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		Mat44::Mat44()
 		{
 			for (Int32 i = 0; i < 4; ++i)
@@ -300,7 +304,7 @@ namespace blitz
 			}
 			return *this;
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		Mat44 & operator +=(Mat44 &matrix0, const Mat44 &matrix1)
 		{
 			return (matrix0 = matrix0 + matrix1);
@@ -401,9 +405,10 @@ namespace blitz
 		{
 			return !(matrix0 == matrix1);
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		void buildEmpty(Mat44 *out_matrix)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			for (Int32 i = 0; i < 4; ++i)
 			{
 				for (Int32 j = 0; j < 4; ++j)
@@ -414,6 +419,7 @@ namespace blitz
 		}
 		void buildIdentity(Mat44 *out_matrix)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			buildEmpty(out_matrix);
 			for (Int32 i = 0; i < 4; ++i)
 			{
@@ -422,18 +428,21 @@ namespace blitz
 		}
 		void buildTranslation(Mat44 *out_matrix, const Vec2 &translation)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			buildIdentity(out_matrix);
 			out_matrix->e[0][3] = translation.x;
 			out_matrix->e[1][3] = translation.y;
 		}
 		void buildScaling(Mat44 *out_matrix, const Vec2 &scale)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			buildIdentity(out_matrix);
 			out_matrix->e[0][0] = scale.x;
 			out_matrix->e[1][1] = scale.y;
 		}
 		void buildRotation(Mat44 *out_matrix, const Vec2 &center, float angle)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			buildIdentity(out_matrix);
 			out_matrix->e[0][0] = cosf(angle);
 			out_matrix->e[0][1] = -sinf(angle);
@@ -447,12 +456,13 @@ namespace blitz
 		void buildOrthographicProjection(Mat44 *out_matrix, float left, float right,
 			float bottom, float top, float near, float far)
 		{
+			__BLITZ_ASSERT(out_matrix);
 			buildEmpty(out_matrix);
 			out_matrix->e[0][0] = 2.0f / (right - left);
 			out_matrix->e[0][3] = -((right + left) / (right - left));
 			out_matrix->e[1][1] = 2.0f / (top - bottom);
 			out_matrix->e[1][3] = -((top + bottom) / (top - bottom));
-			out_matrix->e[2][2] = -2.0f / (far - near);
+			out_matrix->e[2][2] = 2.0f / (far - near);
 			out_matrix->e[2][3] = -((far + near) / (far - near));
 			out_matrix->e[3][3] = 1.0f;
 		}

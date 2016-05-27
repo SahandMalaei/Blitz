@@ -1,7 +1,9 @@
-#include "Blitz_Input.h"
-/* ----------------------------------------------------------------------------------- */
+#include "../Include/Blitz_Input.h"
+/* ------------------------------------------------------------------------------------ */
 #include <GLFW/glfw3.h>
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
+#include "Blitz_Debug.h"
+/* ------------------------------------------------------------------------------------ */
 namespace
 {
 	void keyboardCallback(GLFWwindow *window, blitz::Int32 key, blitz::Int32 scanCode,
@@ -10,24 +12,26 @@ namespace
 		blitz::Int32 action, blitz::Int32 modifiers);
 	void mouseScrollCallback(GLFWwindow *window, double offsetX, double offsetY);
 	void resetCallbacks();
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	blitz::Window *currentWindow = 0;
 	blitz::input::KeyboardCallback currentKeyboardCallback = 0;
 	blitz::input::MouseButtonCallback currentMouseButtonCallback = 0;
 	blitz::input::MouseScrollCallback currentMouseScrollCallback = 0;
 }
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 namespace blitz
 {
 	struct Window
 	{
 		GLFWwindow *handle;
 	};
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	namespace input
 	{
 		Int32 setKeyboardCallback(Window *window, KeyboardCallback callback)
 		{
+			__BLITZ_ASSERT(window);
+			__BLITZ_ASSERT(callback);
 			if (currentWindow != window)
 			{
 				resetCallbacks();
@@ -39,6 +43,7 @@ namespace blitz
 		}
 		void removeKeyboardCallback(Window *window)
 		{
+			__BLITZ_ASSERT(window);
 			if (currentWindow == window)
 			{
 				currentKeyboardCallback = 0;
@@ -46,6 +51,8 @@ namespace blitz
 		}
 		Int32 setMouseButtonCallback(Window *window, MouseButtonCallback callback)
 		{
+			__BLITZ_ASSERT(window);
+			__BLITZ_ASSERT(callback);
 			if (currentWindow != currentWindow)
 			{
 				resetCallbacks();
@@ -57,6 +64,7 @@ namespace blitz
 		}
 		void removeMouseButtonCallback(Window *window)
 		{
+			__BLITZ_ASSERT(window);
 			if (currentWindow == window)
 			{
 				currentMouseButtonCallback = 0;
@@ -64,6 +72,8 @@ namespace blitz
 		}
 		Int32 setMouseScrollCallback(Window *window, MouseScrollCallback callback)
 		{
+			__BLITZ_ASSERT(window);
+			__BLITZ_ASSERT(callback);
 			if (currentWindow != currentWindow)
 			{
 				resetCallbacks();
@@ -75,6 +85,7 @@ namespace blitz
 		}
 		void removeMouseScrollCallback(Window *window)
 		{
+			__BLITZ_ASSERT(window);
 			if (currentWindow == window)
 			{
 				currentMouseScrollCallback = 0;
@@ -82,6 +93,9 @@ namespace blitz
 		}
 		void getMousePosition(Int32 *out_x, Int32 *out_y, Window *window)
 		{
+			__BLITZ_ASSERT(out_x);
+			__BLITZ_ASSERT(out_y);
+			__BLITZ_ASSERT(window);
 			double x, y;
 			glfwGetCursorPos(window->handle, &x, &y);
 			*out_x = (Int32)x;
@@ -89,7 +103,7 @@ namespace blitz
 		}
 	}
 }
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 namespace
 {
 	void keyboardCallback(GLFWwindow *window, blitz::Int32 key, blitz::Int32 scanCode,

@@ -1,25 +1,26 @@
-#include "Blitz_Graphics.h"
-#include "Blitz_Graphics_Core__.h"
-/* ----------------------------------------------------------------------------------- */
+#include "../Include/Blitz_Graphics.h"
+#include "Blitz_Graphics_Core.h"
+/* ------------------------------------------------------------------------------------ */
 #include <map>
 #include <string>
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 #include "GL/glew.h"
 #include "FreeImage/FreeImage.h"
-/* ----------------------------------------------------------------------------------- */
-#include "Blitz_Graphics_Camera.h"
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
+#include "Blitz_Debug.h"
+#include "../Include/Blitz_Graphics_Camera.h"
+/* ------------------------------------------------------------------------------------ */
 namespace
 {
 	typedef blitz::Uint32 Shader, ShaderProgram;
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	ShaderProgram shaderProgram;
 	GLuint vertexBuffer, indexBuffer;
 	std::map<std::string, blitz::graphics::Texture> textureList;
 	blitz::Int32 objectTransformLocation, viewTransformLocation,
 		projectionTransformLocation, textureSamplerLocation, useTextureLocation;
 	blitz::graphics::Camera *currentCamera = 0;
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	const char * const DEFAULT_VERTEX_SHADER_SOURCE =
 		"#version 140\n\
 		\n\
@@ -39,7 +40,7 @@ namespace
 			fragmentColor = color;\n\
 			fragmentTextureCoordinates = textureCoordinates;\n\
 		}";
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	const char * const DEFAULT_FRAGMENT_SHADER_SOURCE =
 		"#version 140\n\
 		\n\
@@ -63,19 +64,19 @@ namespace
 				color = fragmentColor;\n\
 			}\n\
 		}";
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	blitz::Int32 createShader(Shader *out_shader, const char *source,
 		blitz::Uint32 glShaderType);
 	blitz::Int32 createShaderProgram(ShaderProgram *out_shaderProgram,
 		Shader *shaderList, blitz::Int32 shaderCount);
 	blitz::Int32 getShaderUniformVariableLocation(const char *identifier);
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	blitz::Int32 setInitialRenderStates();
 	blitz::Int32 initDefaultShaders();
 	blitz::Int32 initDefaultShadersUniformVariables();
 	void updateDefaultShadersUniformVariables();
 }
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 namespace blitz
 {
 	namespace graphics
@@ -105,7 +106,7 @@ namespace blitz
 			b = color.b;
 			return *this;
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		ColorRgba::ColorRgba() :
 			r(0.0f),
 			g(0.0f),
@@ -142,7 +143,7 @@ namespace blitz
 			a = color.a;
 			return *this;
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		Vertex::Vertex()
 		{
 		}
@@ -166,7 +167,7 @@ namespace blitz
 			textureCoordinates = vertex.textureCoordinates;
 			return *this;
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		void clear(const ColorRgba &color)
 		{
 			glClearColor(color.r, color.g, color.b, color.a);
@@ -175,6 +176,10 @@ namespace blitz
 		void draw(Vertex *vertexList, Int32 vertexCount,
 			Uint32 *indexList, Int32 indexCount)
 		{
+			__BLITZ_ASSERT(vertexList);
+			__BLITZ_ASSERT(vertexCount);
+			__BLITZ_ASSERT(indexList);
+			__BLITZ_ASSERT(indexCount);
 			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertexCount, vertexList,
@@ -185,8 +190,23 @@ namespace blitz
 			glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
 			__unsetVertexFormat();
 		}
+		Bool isTextureLoaded(const char *fileAddress)
+		{
+			__BLITZ_ASSERT(fileAddress);
+			for (auto listIterator = textureList.begin();
+				listIterator != textureList.end(); ++listIterator)
+			{
+				if (listIterator->first == fileAddress)
+				{
+					return 1;
+				}
+			}
+			return 0;
+		}
 		Int32 loadTexture(Texture *out_texture, const char *fileAddress)
 		{
+			__BLITZ_ASSERT(out_texture);
+			__BLITZ_ASSERT(fileAddress);
 			auto existingTexture = textureList.find(std::string(fileAddress));
 			if (existingTexture != textureList.end())
 			{
@@ -201,6 +221,8 @@ namespace blitz
 			}
 			if (freeImageFormat == FIF_UNKNOWN)
 			{
+				__BLITZ_THROW_ERROR("Failed to load image \"" +
+					std::string(fileAddress) + "\" : Image format is not supported.");
 				return 1;
 			}
 			Bool loadAlphaChannel = 0;
@@ -219,22 +241,31 @@ namespace blitz
 			}
 			if (FreeImage_FIFSupportsReading(freeImageFormat) == 0)
 			{
+				__BLITZ_THROW_ERROR("Failed to load image \"" +
+					std::string(fileAddress) +
+					"\" : Reading from this image format is not supported.");
 				return 1;
 			}
 			FIBITMAP *freeImageBitmap = FreeImage_Load(freeImageFormat, fileAddress, 0);
 			if (freeImageBitmap == 0)
 			{
+				__BLITZ_THROW_ERROR("Failed to load image \"" +
+					std::string(fileAddress) + "\" : Failed to load image file.");
 				return 1;
 			}
 			BYTE *imageData = FreeImage_GetBits(freeImageBitmap);
 			if (imageData == 0)
 			{
+				__BLITZ_THROW_ERROR("Failed to load image \"" +
+					std::string(fileAddress) + "\" : Failed to get image data.");
 				return 1;
 			}
 			Int32 imageWidth = FreeImage_GetWidth(freeImageBitmap),
 				imageHeight = FreeImage_GetHeight(freeImageBitmap);
 			if (imageWidth <= 0 || imageHeight <= 0)
 			{
+				__BLITZ_THROW_ERROR("Failed to load image \"" +
+					std::string(fileAddress) + "\" : Image dimensions are invalid.");
 				return 1;
 			}
 			glGenTextures(1, out_texture);
@@ -251,6 +282,8 @@ namespace blitz
 			std::pair<std::string, Texture> newPair =
 				std::pair<std::string, Texture>(fileAddress, *out_texture);
 			textureList.insert(newPair);
+			blitz::__debug::throwMessage("Image \"" + std::string(fileAddress) +
+				"\" loaded.");
 			return 0;
 		}
 		void unloadTexture(Texture texture)
@@ -266,10 +299,7 @@ namespace blitz
 					break;
 				}
 			}
-			if (!textureExists)
-			{
-				return;
-			}
+			__BLITZ_ASSERT(textureExists);
 			glDeleteTextures(1, &texture);
 		}
 		void setTexture(Texture texture)
@@ -330,7 +360,7 @@ namespace blitz
 		{
 			glDisable(GL_BLEND);
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		void __setVertexFormat()
 		{
 			glEnableVertexAttribArray(0);
@@ -348,7 +378,7 @@ namespace blitz
 			glDisableVertexAttribArray(1);
 			glDisableVertexAttribArray(2);
 		}
-		/* --------------------------------------------------------------------------- */
+		/* ---------------------------------------------------------------------------- */
 		namespace __core
 		{
 			Int32 init()
@@ -356,18 +386,23 @@ namespace blitz
 				Int32 result = setInitialRenderStates();
 				if (result != 0)
 				{
+					__BLITZ_THROW_ERROR("Failed to set the initial render states.");
 					return 1;
 				}
 				result = initDefaultShaders();
 				if (result != 0)
 				{
+					__BLITZ_THROW_ERROR("Failed to initialize the default shaders.");
 					return 1;
 				}
 				result = initDefaultShadersUniformVariables();
 				if (result != 0)
 				{
+					__BLITZ_THROW_ERROR(
+						"Failed to initialize the default shaders' uniform variables.");
 					return 1;
 				}
+				blitz::__debug::throwMessage("Graphics system initialized.");
 				return 0;
 			}
 			void beginRender()
@@ -384,7 +419,7 @@ namespace blitz
 		}
 	}
 }
-/* ----------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------ */
 namespace
 {
 	blitz::Int32 createShader(Shader *out_shader, const char *source,
@@ -393,6 +428,7 @@ namespace
 		Shader shader = glCreateShader(glShaderType);
 		if (shader == 0)
 		{
+			__BLITZ_THROW_ERROR("Failed to create shader.");
 			return 1;
 		}
 		GLint sourceLength = strlen(source);
@@ -402,6 +438,10 @@ namespace
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
 		if (success == 0)
 		{
+			const int COMPILE_INFO_LOG_SIZE = 512;
+			GLchar infoLog[COMPILE_INFO_LOG_SIZE];
+			glGetShaderInfoLog(shader, COMPILE_INFO_LOG_SIZE, 0, infoLog);
+			__BLITZ_THROW_ERROR("Shader compilation failed : " + std::string(infoLog));
 			return 1;
 		}
 		*out_shader = shader;
@@ -420,6 +460,11 @@ namespace
 		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
 		if (success == 0)
 		{
+			const int LINK_INFO_LOG_SIZE = 512;
+			char infoLog[LINK_INFO_LOG_SIZE];
+			glGetProgramInfoLog(shaderProgram, LINK_INFO_LOG_SIZE, 0, infoLog);
+			__BLITZ_THROW_ERROR("Shader program linking failed : " +
+				std::string(infoLog));
 			return 1;
 		}
 		glValidateProgram(shaderProgram);
@@ -427,6 +472,11 @@ namespace
 		glGetProgramiv(shaderProgram, GL_VALIDATE_STATUS, &success);
 		if (success == 0)
 		{
+			const int VALIDATE_INFO_LOG_SIZE = 512;
+			GLchar infoLog[VALIDATE_INFO_LOG_SIZE];
+			glGetProgramInfoLog(shaderProgram, VALIDATE_INFO_LOG_SIZE, 0, infoLog);
+			__BLITZ_THROW_ERROR("Shader program validation failed : " +
+				std::string(infoLog));
 			return 1;
 		}
 		*out_shaderProgram = shaderProgram;
@@ -436,12 +486,13 @@ namespace
 	{
 		return glGetUniformLocation(shaderProgram, identifier);
 	}
-	/* ------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------- */
 	blitz::Int32 setInitialRenderStates()
 	{
 		GLenum result = glewInit();
 		if (result != GLEW_OK)
 		{
+			__BLITZ_THROW_ERROR("Failed to initialize GLEW.");
 			return 1;
 		}
 		glGenBuffers(1, &vertexBuffer);
@@ -449,8 +500,7 @@ namespace
 		glGenBuffers(1, &indexBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_GEQUAL);
-		glClearDepthf(-1.0f);
+		glDepthFunc(GL_LEQUAL);
 		return 0;
 	}
 	blitz::Int32 initDefaultShaders()
@@ -460,17 +510,20 @@ namespace
 			GL_VERTEX_SHADER);
 		if (result != 0)
 		{
+			__BLITZ_THROW_ERROR("Failed to create the default vertex shader.");
 			return 1;
 		}
 		result = createShader(&shaderList[1], DEFAULT_FRAGMENT_SHADER_SOURCE,
 			GL_FRAGMENT_SHADER);
 		if (result != 0)
 		{
+			__BLITZ_THROW_ERROR("Failed to create the default fragment shader.");
 			return 1;
 		}
 		result = createShaderProgram(&shaderProgram, shaderList, 2);
 		if (result != 0)
 		{
+			__BLITZ_THROW_ERROR("Failed to create the default shader program.");
 			return 1;
 		}
 		glUseProgram(shaderProgram);

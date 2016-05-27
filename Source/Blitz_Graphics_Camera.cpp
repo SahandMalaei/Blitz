@@ -1,5 +1,5 @@
-#include "Blitz_Graphics_Camera.h"
-/* ----------------------------------------------------------------------------------- */
+#include "../Include/Blitz_Graphics_Camera.h"
+/* ------------------------------------------------------------------------------------ */
 namespace blitz
 {
 	namespace graphics
@@ -54,7 +54,7 @@ namespace blitz
 			viewportCenter_ = camera.viewportCenter_;
 			return *this;
 		}
-		math::Vec2 Camera::getPosition() const
+		const math::Vec2 Camera::getPosition() const
 		{
 			return position_;
 		}
@@ -78,7 +78,7 @@ namespace blitz
 				viewRotationValid_ = 0;
 			}
 		}
-		math::Mat44 Camera::getView() const
+		const math::Mat44 Camera::getView() const
 		{
 			if (!viewTranslationValid_ || !viewRotationValid_)
 			{
@@ -97,7 +97,7 @@ namespace blitz
 			}
 			return view_;
 		}
-		math::Mat44 Camera::getProjection() const
+		const math::Mat44 Camera::getProjection() const
 		{
 			return projection_;
 		}
