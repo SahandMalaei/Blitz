@@ -18,7 +18,7 @@ namespace blitz
 
 #if ((defined _DEBUG) && (!defined _NDEBUG))
 	#define __BLITZ_ASSERT(expression) (void)(expression || \
-		(__debug::throwError("Assertion failed : \"" + std::string(#expression) + \
+		(blitz::__debug::throwError("Assertion failed : \"" + std::string(#expression) + \
 		"\", file \"" + std::string(__FILE__) + "\", line " + \
 		std::to_string(unsigned int(__LINE__))), 0))
 #else
