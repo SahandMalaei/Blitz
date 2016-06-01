@@ -64,6 +64,7 @@ namespace blitz
 			{
 				position_ = position;
 				viewTranslationValid_ = 0;
+				viewRotationValid_ = 0;
 			}
 		}
 		float Camera::getAngle() const
