@@ -57,6 +57,7 @@ namespace blitz
 				if (updateCount >= MAX_ALLOWED_UPDATES_PER_FRAME)
 				{
 					lag = 0.0f;
+					previousTime = getTime();
 					break;
 				}
 			}
