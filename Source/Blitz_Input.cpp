@@ -53,7 +53,7 @@ namespace blitz
 		{
 			__BLITZ_ASSERT(window);
 			__BLITZ_ASSERT(callback);
-			if (currentWindow != currentWindow)
+			if (currentWindow != window)
 			{
 				resetCallbacks();
 				currentWindow = window;
@@ -74,7 +74,7 @@ namespace blitz
 		{
 			__BLITZ_ASSERT(window);
 			__BLITZ_ASSERT(callback);
-			if (currentWindow != currentWindow)
+			if (currentWindow != window)
 			{
 				resetCallbacks();
 				currentWindow = window;
